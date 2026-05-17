@@ -93,9 +93,9 @@ User DashBoard
                                 <td>{{ s.recipientName }}</td>
                                 <td>{{ s.recipientAddress }}</td>
                                 <td><span
-                                        class="badge {% if s.status == 'hub' %} bg-warning text-dark {% elif s.status == 'depart' %} bg-primary {% elif s.status == 'delivered' %} bg-success {% else %} bg-secondary {% endif %} p-2">
-                                        {{ s.status }} </span></td>
-                                <td>{{ s.date|date:"Y-m-d h:i A" }}</td>
+                                        class="badge {% if s.delivery_status == 'AT_HUB' %} bg-warning text-dark {% elif s.delivery_status == 'DEPARTED' %} bg-primary {% elif s.delivery_status == 'delivered' %} bg-success {% else %} bg-secondary {% endif %} p-2">
+                                        {{ s.delivery_status }} </span></td>
+                                <td>{{ s.created_at|date:"Y-m-d h:i A" }}</td>
                                 <td><a href="{% url 'track' %}?id={{s.trackingId}}"
                                         class="btn btn-sm btn-info text-white">
                                         <i class="fas fa-eye"></i> Track

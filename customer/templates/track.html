@@ -31,61 +31,73 @@ Track Your Order
                 <div class="card shadow-lg">
                     {% for s in active_shipments %}
                     <div class="card-header bg-success text-white">
-                        <h5 class="mb-0"><i class="fas fa-check-circle me-2"></i> Status: {{s.status}} </h5>
+                        <h5 class="mb-0"><i class="fas fa-check-circle me-2"></i> Status: {{s.delivery_status}} </h5>
                     </div>
                     <div class="card-body">
                         <p class="card-text fs-5">Tracking ID: <b> {{s.trackingId}} </b></p>
-                        <p class="card-text">Estimated Delivery: <b> {{ s.delivered_date }} </b></p>
+                        <p class="card-text">Estimated Delivery: <b> {{ s.delivered_at }} </b></p>
 
                         <h6 class="mt-4 mb-3 border-bottom pb-2 text-secondary">Shipment History</h6>
                         <ul class="list-group list-group-flush">
-                            {% if s.status == "out" or s.status == "hub" or s.status == "depart" or s.status == "delivered" %}
+                            {% if s.delivery_status == "OUT_FOR_DELIVERY" or s.delivery_status == "AT_HUB" or s.delivery_status == "DEPARTED" or s.delivery_status == "DELIVERED" %}
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div>
                                     <i class="fas fa-check text-success me-2"></i>
                                     <span class="fw-bold">Out for Delivery</span>
                                     <p class="mb-0 text-muted small">Local Distribution Center,
-                                        {{s.delivery_place_status}}
+                                        {{s.current_location}}
                                     </p>
                                 </div>
-                                <span class="badge bg-success rounded-pill">{{ s.reached_status_date }}</span>
+                                <span class="badge bg-success rounded-pill">{{ s.status_updated_at }}</span>
                             </li>
                             {% endif %}
 
-                            {% if s.status == "hub" or s.status == "depart" or s.status == "delivered" %}
+                            {% if s.delivery_status == "AT_HUB" or s.delivery_status == "DEPARTED" or s.delivery_status == "DELIVERED" %}
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div>
                                     <i class="fas fa-truck-loading text-info me-2"></i>
                                     <span class="fw-bold">Arrived at Destination Hub</span>
                                     <p class="mb-0 text-muted small">
-                                        {{s.delivery_place_status}}
+                                        {{s.current_location}}
                                     </p>
                                 </div>
-                                <span class="badge bg-info rounded-pill">{{ s.reached_status_date }}</span>
+                                <span class="badge bg-info rounded-pill">{{ s.status_updated_at }}</span>
                             </li>
                             {% endif %}
 
-                            {% if s.status == "depart" or s.status == "delivered" %}
+                            {% if s.delivery_status == "DEPARTED" or s.delivery_status == "DELIVERED" %}
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div>
                                     <i class="fas fa-plane text-secondary me-2"></i>
                                     <span class="fw-bold">Departed from Origin Hub</span>
-                                    <p class="mb-0 text-muted small">{{s.delivery_place_status}}</p>
+                                    <p class="mb-0 text-muted small">{{s.current_location}}</p>
                                 </div>
-                                <span class="badge bg-secondary rounded-pill">{{ s.reached_status_date }}</span>
+                                <span class="badge bg-secondary rounded-pill">{{ s.status_updated_at }}</span>
                             </li>
                             {% endif %}
 
-                            {% if s.status == "delivered" %}
+                            {% if s.delivery_status == "DELIVERED" %}
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div>
                                     <i class="fas fa-box-open text-muted me-2"></i>
                                     <span class="fw-bold">Shipment Picked Up</span>
                                     <p class="mb-0 text-muted small"> {{s.recipientAddress}} </p>
                                 </div>
-                                <span class="badge bg-dark rounded-pill">{{ s.reached_status_date }}</span>
+                                <span class="badge bg-dark rounded-pill">{{ s.status_updated_at }}</span>
                             </li>
                             {% endif %}
+
+                            {% if s.delivery_status == "CANCELLED" %}
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div>
+                                    <i class="fas fa-box-open text-muted me-2"></i>
+                                    <span class="fw-bold">Order has been cancelled</span>
+                                    <p class="mb-0 text-muted small"> {{s.recipientAddress}} </p>
+                                </div>
+                                <span class="badge bg-dark rounded-pill">{{ s.status_updated_at }}</span>
+                            </li>
+                            {% endif %}
+
                         </ul>
                     </div>
                     {% endfor %}

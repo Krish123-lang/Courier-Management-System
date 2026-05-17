@@ -53,9 +53,9 @@ Billings For Your All Orders
                                         <td>{{ inv.created_at|date:"Y-m-d" }}</td>
                                         <td>₹{{ inv.amount }}</td>
                                         <td>
-                                            {% if inv.status == "PAID" %}
+                                            {% if inv.delivery_status == "PAID" %}
                                             <span class="badge bg-success">Paid</span>
-                                            {% elif inv.status == "PENDING" %}
+                                            {% elif inv.delivery_status == "PENDING" %}
                                             <span class="badge bg-warning text-dark">Pending</span>
                                             {% else %}
                                             <span class="badge bg-danger">Cancelled</span>

@@ -10,50 +10,60 @@ def generate_trackingId():
     ch = string.ascii_uppercase + string.digits
     return "".join(random.choice(ch) for _ in range(10))
 
-class booking(models.Model):
-    status_choices = (
-        ('Pending', 'Pending'),
-        ('out', 'out'),
-        ('hub', 'hub'),
-        ('depart', 'depart'),
-        ('delivered', 'delivered'),
-        ('cancelled', 'cancelled'),
+class Shipment(models.Model):
+    # status_choices = (
+    #     ('Pending', 'Pending'),
+    #     ('out', 'OUT FOR DELIVERY'),
+    #     ('hub', 'AT HUB'),
+    #     ('depart', 'DEPARTED'),
+    #     ('delivered', 'DELIVERED'),
+    #     ('cancelled', 'CANCELLED'),
+    # )
+    
+    STATUS_CHOICES = (
+        ('PENDING', 'Pending'),
+        ('AT_HUB', 'At Hub'),
+        ('OUT_FOR_DELIVERY', 'Out For Delivery'),
+        ('DEPARTED', 'Departed'),
+        ('DELIVERED', 'Delivered'),
+        ('CANCELLED', 'Cancelled'),
     )
-    userid = models.ForeignKey(sign, on_delete=models.CASCADE, null=True, blank=True)
+    
+    customerid = models.ForeignKey(sign, on_delete=models.CASCADE, null=True, blank=True)
     trackingId = models.CharField(max_length=20, default = generate_trackingId, unique=True, null=True)
-    status = models.CharField(max_length=50, default="Pending", choices=status_choices, null=True)
-    delivered_date = models.DateTimeField(null=True, blank=True)
-    reached_status_date = models.DateTimeField(null=True, blank=True)
-    delivery_place_status = models.CharField(max_length=50, null=True)
-    name = models.CharField(max_length=100, null=True)
+    delivery_status = models.CharField(max_length=50, default="Pending", choices=STATUS_CHOICES, null=True)
+    delivered_at = models.DateTimeField(null=True, blank=True)
+    status_updated_at = models.DateTimeField(null=True, blank=True)
+    current_location = models.CharField(max_length=50, null=True)
+    sender_name = models.CharField(max_length=100, null=True)
     pickupAddress = models.TextField(null=True)
-    senderNumber = models.IntegerField(null=True)
+    senderNumber = models.CharField(max_length=15, null=True)
     recipientName = models.CharField(max_length=100, null=True)
     recipientAddress = models.TextField(null=True)
-    recipientNumber = models.IntegerField(null=True)
-    package = models.CharField(max_length=100, null=True)
-    service = models.CharField(max_length=100, null=True)
-    date = models.DateTimeField(auto_now_add=True)
-    rs = models.CharField(max_length=10, null=True)
+    recipientNumber = models.CharField(max_length=15, null=True)
+    package_description = models.CharField(max_length=100, null=True)
+    service_type = models.CharField(max_length=100, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    shipping_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
     def __str__(self):
         return str(self.trackingId or self.id)
 
     def save(self, *args, **kwargs):
-        # Update reached_status_date whenever status changes
+        # Update status_updated_at whenever status changes
         if self.pk:
             try:
-                old = booking.objects.get(pk=self.pk)
-                old_status = old.status
-            except booking.DoesNotExist:
+                old = Shipment.objects.get(pk=self.pk)
+                old_status = old.delivery_status
+            except Shipment.DoesNotExist:
                 old_status = None
         else:
             old_status = None
 
-        if self.status != old_status:
-            self.reached_status_date = timezone.now()
-            if str(self.status).lower() == 'delivered':
-                self.delivered_date = timezone.now()
+        if self.delivery_status != old_status:
+            self.status_updated_at = timezone.now()
+            if str(self.delivery_status).lower() == 'DELIVERED':
+                self.delivered_at = timezone.now()
 
         super().save(*args, **kwargs)
 

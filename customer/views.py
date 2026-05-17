@@ -11,17 +11,17 @@ from django.shortcuts import get_object_or_404
 def dash(request):
     abc = request.session.get("email")
     userObj = sign.objects.get(email=abc)
-    total_shipments = booking.objects.filter(userid = userObj).count()
-    in_transit = booking.objects.filter(userid = userObj, status='hub').count()
-    delivered = booking.objects.filter(userid = userObj, status='delivered').count()
-    cancelled = booking.objects.filter(userid = userObj, status='cancelled').count()
-    recent_shipments = booking.objects.filter(userid = userObj).order_by('-date')[:5]
+    total_shipments = Shipment.objects.filter(customerid = userObj).count()
+    in_transit = Shipment.objects.filter(customerid = userObj, delivery_status='AT_HUB').count()
+    delivered = Shipment.objects.filter(customerid = userObj, delivery_status='DELIVERED').count()
+    cancelled = Shipment.objects.filter(customerid = userObj, delivery_status='CANCELLED').count()
+    recent_shipments = Shipment.objects.filter(customerid = userObj).order_by('-created_at')[:5]
     context = {
         'total_shipments': total_shipments,
         'in_transit': in_transit,
         'delivered': delivered,
         'cancelled': cancelled,
-        'userid' : abc,
+        'customerid' : abc,
         'recent_shipments': recent_shipments,
     }
     return render(request, 'dashboard.html', context)
@@ -30,8 +30,8 @@ def dash(request):
 def track(request):
     tid = request.GET.get("id")
     if(request.session.get("email")):
-        user_bookings = booking.objects.filter(trackingId = tid)
-        active_shipments = user_bookings.exclude(status='Delivered').order_by('-date')
+        user_bookings = Shipment.objects.filter(trackingId = tid)
+        active_shipments = user_bookings.exclude(delivery_status='delivered').order_by('-created_at')
         data = {
             "active_shipments" : active_shipments,
         }

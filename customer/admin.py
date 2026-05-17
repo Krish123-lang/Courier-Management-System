@@ -3,8 +3,8 @@ from .models import *
 
 # Register your models here.
 
-class bookingAdmin(admin.ModelAdmin):
-    list_display = ("id", "trackingId", "name", "recipientName", "status")
-admin.site.register(booking, bookingAdmin)
+class ShipmentAdmin(admin.ModelAdmin):
+    list_display = ("id", "trackingId", "sender_name", "recipientName", "delivery_status")
+admin.site.register(Shipment, ShipmentAdmin)
 
 

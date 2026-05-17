@@ -64,9 +64,9 @@ Your History will Appear Here
                                 <td>{{ s.recipientName }}</td>
                                 <td>{{ s.recipientAddress }}</td>
                                 <td><span
-                                        class="badge {% if s.status == 'In Transit' %} bg-warning text-dark {% elif s.status == 'Processing' %} bg-primary {% else %} bg-secondary {% endif %} p-2">
-                                        {{ s.status }} </span></td>
-                                <td>{{ s.date|date:"Y-m-d h:i A" }}</td>
+                                        class="badge {% if s.delivery_status == 'In Transit' %} bg-warning text-dark {% elif s.delivery_status == 'Processing' %} bg-primary {% else %} bg-secondary {% endif %} p-2">
+                                        {{ s.delivery_status }} </span></td>
+                                <td>{{ s.created_at|date:"Y-m-d h:i A" }}</td>
                                 <td><a href="{% url 'track' %}?id={{s.trackingId}}"
                                         class="btn btn-sm btn-info text-white">
                                         <i class="fas fa-eye"></i> Track
@@ -103,8 +103,8 @@ Your History will Appear Here
                             <tr>
                                 <td class="fw-bold">{{ s.trackingId }}</td>
                                 <td>{{ s.recipientName }}</td>
-                                <td>{{ s.delivered_date|date:"Y-m-d h:i A" }}</td>
-                                <td><span class="badge bg-success p-2">{{ s.status }}</span></td>
+                                <td>{{ s.delivered_at|date:"Y-m-d h:i A" }}</td>
+                                <td><span class="badge bg-success p-2">{{ s.delivery_status }}</span></td>
                                 <td><a href="{% url 'bill' %}" class="btn btn-sm btn-outline-secondary">
                                         <i class="fas fa-file-pdf"></i>
                                     </a>
