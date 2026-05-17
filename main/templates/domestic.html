@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Domestic Services - PostOffice
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .card {
+        backdrop-filter: blur(6px);
+        border-radius: 16px;
+        transition: transform 0.8s ease, box-shadow 0.8s ease
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6)
+    }
+
+    .icon-circle {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem
+    }
+</style>
+
+<div class="row my-4 mb-5 pb-5">
+    <div class="col-sm-11 mx-auto">
+        <div class="row text-center">
+            <div class="h4 mt-3 text-danger">
+                Domestic Services — Fast, Reliable, and Trackable Deliveries Within India
+                <div class="w-75 d-block mx-auto mt-2" style="border-bottom: 3px solid black !important;">
+                </div>
+            </div>
+            <div class="display-6 fw-bold mt-4 mb-4 text-warning">Your Delivery — On Time, Every Time</div>
+            <p class="lead">
+                Standard, Express, and Same Day — clear timelines and pricing for every option.
+                Choose a service below and start booking.
+            </p>
+            <small class="lead text-danger">Available in major cities across India.</small>
+        </div>
+        <div class="row my-3">
+            <div class="col-sm-4 p-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title h5">
+                            <div class="icon-circle"
+                                style="background:linear-gradient(180deg,#e6f0ff, #d5e8ff);color:#0b2b45">
+                                <i class="fas fa-truck fs-3"></i>
+                            </div>
+                            Standard Delivery<br><small>(Normal Delivery)</small>
+                        </div>
+                        <p class="card-text">
+                        <div class="badge bg-danger text-light fw-bold">Delivered in 9–10 days</div>
+                        <div class="my-2">
+                            Affordable option — best for less urgent parcels. Rates depend on
+                            weight and distance.
+                        </div>
+                        </p>
+                        <ul class="list-unstyled mb-4">
+                            <li><i class="fas fa-circle-check me-2"></i> Basic Tracking</li>
+                            <li><i class="fas fa-circle-check me-2"></i> Order Updates via SMS/Email</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 p-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title h5">
+                            <div class="icon-circle"
+                                style="background:linear-gradient(180deg,#fff4e0,#ffe7c7);color:#6b3f05">
+                                <i class="fas fa-bolt fs-3"></i>
+                            </div>
+                            Express Delivery<br><small>(Quick Delivery)</small>
+                        </div>
+                        <p class="card-text">
+                        <div class="badge bg-danger text-light fw-bold">Delivered in 7–8 days</div>
+                        <div class="my-2">
+                            Fast service — for important and time-sensitive parcels.
+                        </div>
+                        </p>
+                        <ul class="list-unstyled mb-4">
+                            <li><i class="fas fa-circle-check me-2"></i>Fast Tracking & Priority Handling</li>
+                            <li><i class="fas fa-circle-check me-2"></i>Barcode Scanning</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 p-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <div class="icon-circle"
+                                style="background:linear-gradient(180deg,#e8ffe9,#d9fff1);color:#03442b">
+                                <i class="fas fa-house-circle-check fs-3"></i>
+                            </div>
+                            Same Day Delivery<br><small>(Delivery Same Day)</small>
+                        </h5>
+                        <p class="card-text">
+                        <div class="badge bg-danger text-light fw-bold">Within city — same day</div>
+                        <div class="my-2">
+                            Best for local shipments — fast pickup and drop-off.
+                        </div>
+                        </p>
+                        <ul class="list-unstyled mb-4">
+                            <li><i class="fas fa-circle-check me-2"></i> Live Driver Location</li>
+                            <li><i class="fas fa-circle-check me-2"></i> COD / Digital Payment Support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

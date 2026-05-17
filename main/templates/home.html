@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+CMS
+{% endblock %}
+
+{% block content %}
+
+<!-- Slider Start -->
+{% comment %} <div class="row my-2">
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="2500ms">
+                <img src="{% static 'images/slider1.jpg' %}" class="d-block w-100" style="height: 800px;"
+                    alt="Server Error">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="2500ms">
+                <img src="{% static 'images/slider2.jpg' %}" class="d-block w-100" style="height: 800px;"
+                    alt="Server Error">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="2500ms">
+                <img src="{% static 'images/slider3.jpg' %}" class="d-block w-100" style="height: 800px;"
+                    alt="Server Error">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div> {% endcomment %}
+<!-- Slider End -->
+
+
+<!-- who we are start -->
+{% comment %} <div class="row">
+    <div class="col-sm-10 mx-auto">
+        <div class="row my-4">
+            <div class="col-sm-5">
+                <div class="h2 text-start text-danger my-3">
+                    Who We Are
+                    <div class="w-50 border border-2 border-dark border-bottom"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 fs-5 text-justify">
+                <div>
+                    At Box Bird Courier, we believe that every package carries a promise, and we are dedicated to
+                    delivering on that promise with speed, care, and unwavering reliability. Like a bird soaring
+                    swiftly
+                    and directly to its destination, our team is committed to ensuring your items reach their
+                    recipients
+                    safely and on time, every time.
+                </div>
+                <div class="mt-3">
+                    We combine cutting-edge logistics with a personal touch, offering a seamless and efficient
+                    delivery
+                    experience that you can trust. From crucial documents to cherished gifts, we handle each
+                    delivery
+                    with the precision and attention to detail it deserves, connecting you to what matters most,
+                    wherever it needs to go.
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <img src="{% static 'images/whoweare.jpg' %}" alt="Who We are" class="img-fluid rounded-5 w-100"
+                    style="height: 400px;">
+            </div>
+        </div>
+    </div>
+</div> {% endcomment %}
+<!-- who we are end -->
+
+
+<!-- Services Section Start -->
+{% comment %} <div class="row">
+    <div class="col-sm-11 mx-auto">
+        <div class="row">
+            <div class="col-sm-5 p-5">
+                <div class="h2 text-start text-danger my-3">
+                    Our Services
+                    <div class="w-50 border border-2 border-dark border-bottom"></div>
+                </div>
+                <div class="fw-bold h1">
+                    Reliable Logistics, Powered by Innovation
+                </div>
+                <div class="mt-4 text-justify">
+                    Experience seamless shipping with our cutting-edge logistics solutions, designed to deliver your
+                    packages swiftly and securely, every time.
+                    <div class="text-justify mt-3">
+                        Our intelligent tracking system keeps you updated in real-time, while our dedicated support
+                        ensures your shipments reach their destination with complete peace of mind.
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7 py-5 mt-5">
+                <div class="row mb-3">
+                    <div class="h4">
+                        Domestic Delivery
+                        <div class="w-25 border border-1 border-dark border-bottom"></div>
+                    </div>
+                    <div class="text-justify">
+                        Fast, Reliable, Nationwide Coverage
+                        Deliver your parcels anywhere across India with speed, safety, and trust. Enjoy
+                        budget-friendly
+                        rates,
+                        flexible payment options, and complete shipment security from pickup to delivery.
+                        <br>
+                        <a href="{% url 'dom' %}" class="text-danger fs-1 m-0" style="text-decoration: none;">&rarr;</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="h4">
+                        Value Added Services
+                        <div class="w-25 border border-1 border-dark border-bottom"></div>
+                    </div>
+                    <div class="mt-3 text-justify">
+                        More Than Just Delivery
+                        Enhance your shipping experience with our range of extra services — real-time tracking,
+                        secure
+                        packaging, insurance options, and priority handling — designed to give you peace of mind
+                        every
+                        step of the way.
+                        <br>
+                        <a href="{% url 'vas' %}" class="text-danger fs-1 m-0" style="text-decoration: none;">&rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> {% endcomment %}
+<!-- Services Section End -->
+
+{% endblock %}

@@ -1,0 +1,310 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <link href="{% static 'images/logo.jpg' %}" type="image/x-icon" rel="icon" />
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/all.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/all.js' %}"></script>
+
+    <style>
+        .abcd {
+            transition: 0.7s;
+        }
+
+        .abcd:hover {
+            box-shadow: 0px 0px 10px black;
+            transition: 0.7s;
+            transform: scale(1.1);
+        }
+
+        .hover-text-danger:hover {
+            color: red !important;
+        }
+
+        .btn-link:hover {
+            opacity: 0.8;
+        }
+
+        #preloader {
+            background: white url("{% static 'images/preloader.gif' %}") no-repeat center;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 9999;
+            background-size: 20%;
+        }
+    </style>
+
+    <script>
+        window.addEventListener('load', function () {
+            const loader = document.getElementById("preloader")
+            if (loader) {
+                loader.style.display = "none";
+            }
+        })
+    </script>
+</head>
+
+<body>
+    <!-- Preloader Start -->
+    <div id="preloader"></div>
+    <!-- Preloader End -->
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-11 mx-auto">
+                <div class="row">
+                    <div class="col-sm-2">
+                        {% comment %} <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid ms-4 w-75"> {% endcomment %}
+                    </div>
+                    <div class="col-sm-10">
+                        {% comment %} <div class="row">
+                            <div class="col-sm-5">
+                                <b>
+                                    <i class="fa-solid fa-envelope fa-flip mt-4 text-danger fs-2"></i>
+                                    Mail Us- greatvarshney983734@gmail.com
+                                </b>
+                            </div>
+                            <div class="col-sm-3">
+                                <b>
+                                    <i class="fa-solid fa-phone fa-shake pt-1 mt-4 text-danger fs-2"></i>
+                                    Call Us-
+                                    9119015065
+                                </b>
+                            </div>
+                            <div class="col-sm-4 pt-4">
+                                <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
+                                    aria-label="WhatsApp">
+                                    <i class="fa-brands fa-whatsapp fs-3"></i>
+                                </a>
+                                <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
+                                    aria-label="Instagram">
+                                    <i class="fa-brands fa-instagram fs-3"></i>
+                                </a>
+                                <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
+                                    aria-label="Linkedin">
+                                    <i class="fa-brands fa-linkedin fs-3"></i>
+                                </a>
+                                <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
+                                    aria-label="GitHub">
+                                    <i class="fa-brands fa-github fs-3"></i>
+                                </a>
+                                <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
+                                    aria-label="Snapchat">
+                                    <i class="fa-brands fa-youtube fs-3"></i>
+                                </a>
+                            </div>
+                        </div> {% endcomment %}
+                        <!-- NavBar Start -->
+                        <div class="row pt-3">
+                            <div class="col-sm-12">
+                                <nav class="navbar navbar-expand-lg">
+                                    <div class="container-fluid">
+                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#navbarSupportedContent"
+                                            aria-controls="navbarSupportedContent" aria-expanded="false"
+                                            aria-label="Toggle navigation">
+                                            <span class="navbar-toggler-icon"></span>
+                                        </button>
+                                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                                <li class="nav-item">
+                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
+                                                        href="{% url 'home' %}">
+                                                        <i class="fa-solid fa-house"></i> Home
+                                                    </a>
+                                                </li>
+                                                {% comment %} <li class="nav-item">
+                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
+                                                        href="{% url 'about' %}">
+                                                        <i class="fa-solid fa-circle-info"></i> About Us
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 dropdown-toggle"
+                                                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa-solid fa-cogs"></i> Services
+                                                    </a>
+                                                    <ul class="dropdown-menu bg-danger">
+                                                        <li><a class="dropdown-item abcd text-light bg-danger"
+                                                                href="{% url 'dom' %}">Domestic
+                                                                Services</a>
+                                                        </li>
+                                                        <li><a class="dropdown-item abcd text-light bg-danger"
+                                                                href="{% url 'vas' %}">Value Added
+                                                                Services</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
+                                                        aria-current="page" href="{% url 'team' %}">
+                                                        <i class="fa-solid fa-user-group"></i> Team
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
+                                                        href="{% url 'contact' %}">
+                                                        <i class="fa-solid fa-phone"></i> Contact Us
+                                                    </a>
+                                                </li> {% endcomment %}
+                                                <li class="nav-item">
+                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
+                                                        aria-current="page" href="{% url 'signup' %}">
+                                                        <i class="fa-solid fa-address-card"></i> Sign Up
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
+                                                        href="{% url 'login' %}">
+                                                        <i class="fa-solid fa-user"></i> User login
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- NavBar End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        {% block content %}
+
+        {% endblock %}
+
+
+        <!-- Footer Start -->
+        {% comment %} <div class="row bg-dark text-white pt-5 pb-3">
+            <div class="col-sm-11 mx-auto border-bottom border-secondary">
+                <div class="row mb-3">
+                    <div class="col-sm-5">
+                        <div class="h5 text-danger fw-bold mb-3 border-bottom d-inline-block border-danger pb-2">
+                            BOXBIRD LOGISTICS
+                        </div>
+                        <p class="text-light fs-6">
+                            BoxBird Logistics is dedicated to providing reliable, fast, and secure courier services
+                            globally. We leverage cutting-edge technology to offer *real-time tracking*, seamless
+                            booking, and personalized delivery solutions for individuals and businesses alike.
+                        </p>
+                        <p class="text-secondary small">
+                            Our mission is to connect communities and commerce with efficiency and care, ensuring every
+                            parcel reaches its destination safely and on time. Experience logistics redefined.
+                        </p>
+                    </div>
+                    <div class="col-sm-3">
+                        <h5 class="text-white fw-bold mb-3">
+                            USEFUL LINKS
+                        </h5>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="{% url 'home' %}"
+                                    class="btn btn-link text-danger text-decoration-none fw-light" aria-current="page">
+                                    <i class="fa-solid fa-house fa-fw me-2"></i> Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'about' %}"
+                                    class="btn btn-link text-danger text-decoration-none fw-light">
+                                    <i class="fa-solid fa-circle-info fa-fw me-2"></i> About Us
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'dom' %}"
+                                    class="btn btn-link text-danger text-decoration-none fw-light">
+                                    <i class="fa-solid fa-cogs fa-fw me-2"></i> Services
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'login' %}"
+                                    class="btn btn-link text-danger text-decoration-none fw-light">
+                                    <i class="fa-solid fa-right-to-bracket fa-fw me-2"></i> Login
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'contact' %}"
+                                    class="btn btn-link text-danger text-decoration-none fw-light">
+                                    <i class="fa-solid fa-list-check fa-fw me-2"></i> Feedback
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'contact' %}"
+                                    class="btn btn-link text-danger text-decoration-none fw-light">
+                                    <i class="fas fa-headset fa-fw me-2"></i> Contact Us
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="text-white fw-bold mb-3">
+                            CONTACT INFO
+                        </h5>
+                        <div class="mb-3 d-flex align-items-start">
+                            <i class="fa-solid fa-location-dot fa-lg text-danger me-3 mt-1"></i>
+                            <address class="text-secondary mb-0 small">
+                                PostOffice Address Line, Main St, Suite 100, City, Country 00000
+                            </address>
+                        </div>
+                        <div class="mb-4 d-flex align-items-center">
+                            <i class="fa-solid fa-phone fa-lg text-danger me-3"></i>
+                            <a href="tel:9119015065"
+                                class="text-secondary text-decoration-none small hover-text-danger">
+                                +91 9119015065
+                            </a>
+                        </div>
+                        <div class="h5 text-white fw-bold mt-5 mb-3">
+                            FOLLOW US
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
+                                aria-label="WhatsApp">
+                                <i class="fa-brands fa-whatsapp fs-3"></i>
+                            </a>
+                            <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
+                                aria-label="Instagram">
+                                <i class="fa-brands fa-instagram fs-3"></i>
+                            </a>
+                            <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
+                                aria-label="Linkedin">
+                                <i class="fa-brands fa-linkedin fs-3"></i>
+                            </a>
+                            <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
+                                aria-label="GitHub">
+                                <i class="fa-brands fa-github fs-3"></i>
+                            </a>
+                            <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
+                                aria-label="Snapchat">
+                                <i class="fa-brands fa-youtube fs-3"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row bg-black">
+            <div class="col-sm-12 py-3 text-end">
+                <a href="#" target="_blank" class="text-secondary text-decoration-none small">
+                    &copy; 2026 Courier Management System. All Rights Reserved.
+                </a>
+            </div>
+        </div> {% endcomment %}
+        <!-- Footer End -->
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+PostOffice - About Us
+{% endblock %}
+
+{% block content %}
+<style>
+    .aboutimage {
+        background: url("{% static 'images/aboutslider.jpg' %}") center/cover no-repeat;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+</style>
+
+<div class="row">
+    <div class="row my-3">
+        <div class="col-sm-12 aboutimage text-light text-center py-5">
+            <div class="fw-bold mt-5 fs-1">About Us</div>
+            <p class="fs-5 w-50 mb-5 mx-auto my-auto fw-bold">
+                Box Bird Courier — India's fastest, safest, and most reliable logistics and delivery network
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-11 mx-auto">
+        <div class="row">
+            <div class="col-sm-5 mx-auto text-center">
+                <div class="h1 my-2 text-danger">Our Vision & Mission</div>
+                <div class="w-100 border border-2 border-dark border-bottom"></div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-6 p-5">
+                <img src="{% static 'images/mission.jpg' %}" alt="Mission Image" class="img-fluid w-75">
+            </div>
+            <div class="col-sm-6">
+                <div class="h2 text-danger">
+                    <i class="fas fa-bullseye"></i> Our Mission
+                </div>
+                <div class="w-50 border border-2 border-dark border-bottom"></div>
+                <div class="fs-5 p-3">
+                    Our mission is to deliver every parcel on time, safely, and with complete customer
+                    satisfaction.
+                    Through technology and a professional team, we aim to make every delivery experience
+                    seamless and
+                    efficient.
+                    <br>
+                    Our mission is to provide secure, rapid, and transparent delivery solutions that empower businesses
+                    and individuals. We achieve this by relentlessly optimizing our network, leveraging cutting-edge
+                    technology, and fostering a team dedicated to meticulous service. We are committed to ensuring every
+                    package, regardless of size or distance, reaches its destination on time, every time.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 p-5">
+                    <div class="h2 text-danger">
+                        <i class="fa fa-eye"></i> Our Vision
+                    </div>
+                    <div class="w-50 border border-2 border-dark border-bottom"></div>
+                    <div class="fs-5 p-3">
+                        Our vision is for Box Bird Courier to become a symbol of reliable logistics in every city
+                        and
+                        town.
+                        We strive to revolutionize India's delivery industry through continuous innovation and
+                        excellence.
+                        <br>
+                        To be the most trusted and efficient courier service globally, setting the industry standard for
+                        speed, reliability, and customer-centric logistics. We envision a future where geographical
+                        barriers are seamlessly bridged, and every delivery contributes to a more connected, thriving
+                        world.
+                    </div>
+                </div>
+                <div class="col-sm-6 p-5">
+                    <img src="{% static 'images/vision.jpg' %}" alt="Vision Image" class="img-fluid w-75">
+                </div>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-sm-12 mb-4">
+                <div class="display-6 fw-bold text-center text-danger">Our Guiding Values</div>
+                <div class="w-50 my-3 mx-auto border border-2 border-dark border-bottom"></div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card mb-3 text-center border-0 shadow-lg p-3">
+                    <div class="fs-1 text-danger mx-auto">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Reliability & Trust</h5>
+                        <p class="card-text text-muted">We are committed to
+                            <b>honoring every promise.</b>
+                            We earn your
+                            trust through consistent, on-time performance and absolute package security.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card mb-3 text-center border-0 shadow-lg p-3">
+                    <div class="fs-1 text-danger mx-auto">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Speed & Efficiency</h5>
+                        <p class="card-text text-muted">We relentlessly pursue the <b>quickest and most streamlined
+                                path</b>. We leverage smart logistics and innovative technology for error-free
+                            delivery.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card mb-3 text-center border-0 shadow-lg p-3">
+                    <div class="fs-1 text-danger mx-auto">
+                        <i class="fas fa-scroll"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Integrity & Transparency</h5>
+                        <p class="card-text text-muted">We operate with <b>complete honesty</b>. This means clear,
+                            upfront pricing, accurate real-time tracking, and open communication with all our
+                            clients.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card mb-3 text-center border-0 shadow-lg p-3">
+                    <div class="fs-1 text-danger mx-auto">
+                        <i class="fas fa-heart-circle-check"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Customer Focus</h5>
+                        <p class="card-text text-muted">Our clients are at the heart of our service. We provide a
+                            <b>responsive, friendly, and personalized experience</b> to meet all their delivery needs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card mb-3 text-center border-0 shadow-lg p-3">
+                    <div class="fs-1 text-danger mx-auto">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Safety & Accountability</h5>
+                        <p class="card-text text-muted">We prioritize the <b>safety of our team and the security of
+                                every item</b>. We take full responsibility for packages from pickup to final
+                            delivery.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

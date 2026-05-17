@@ -1,0 +1,155 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'css/all.css' %}" rel="stylesheet">
+    <script src="{% static 'js/all.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <title>User Dashboard</title>
+
+    <style>
+        .abc:hover {
+            background: linear-gradient(to left, red, yellow) !important;
+            color: black !important;
+            border-radius: 10px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+
+
+        <!-- Header Start -->
+        <div class="row py-3 bg-danger shadow-lg ">
+            <!-- Sidebar Start -->
+            <div class="col-sm-1">
+                <a class="text-light mx-auto ps-3 text-center d-block" data-bs-toggle="offcanvas"
+                    href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                    <i class="fa-solid fa-bars fs-3"></i>
+                </a>
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                    aria-labelledby="offcanvasExampleLabel">
+                    <div class="offcanvas-header">
+                        <div class="offcanvas-title padi mx-auto" id="offcanvasExampleLabel">
+                            <div class="ms-5 fs-1 fw-bold">
+                                {% comment %} BoxBird {% endcomment %}
+                            </div>
+                        </div>
+                        <button type="button" class="bg-light btn-close" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'dashboard' %}">
+                                    <i class="fas fa-tachometer-alt me-1"></i>
+                                    User Dashboard
+                                </a>
+                            </li>
+                            {% comment %} <li class="nav-item">
+                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'book' %}">
+                                    <i class="fas fa-plus-square me-1"></i>
+                                    Book Courier
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'hist' %}">
+                                    <i class="fas fa-box me-1"></i>
+                                    History
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'bill' %}">
+                                    <i class="fas fa-file-invoice-dollar me-1"></i>
+                                    Billings
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'help' %}">
+                                    <i class="fas fa-question-circle me-1"></i>
+                                    Help Center
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'profile' %}">
+                                    <i class="fas fa-user-circle me-1"></i>
+                                    My Profile
+                                </a>
+                            </li> {% endcomment %}
+                            <li class="nav-item">
+                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'signout' %}">
+                                    <i class="fas fa-sign-out-alt me-1"></i>
+                                    Sign Out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Sidebar Start -->
+
+            <!-- Profile Start -->
+            <div class="col-sm-4 text-center">
+                <div class="fw-bold text-light">
+                    {% if request.session %}
+                    {{ request.session.name }}
+                    {% else %}
+                    <i class="fa-solid fa-circle-user fs-1"></i>
+                    <b>Logged out.</b>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-sm-3 text-center">
+                <div class="fw-bold text-light">
+                    {% if request.session %}
+                    {{ request.session.number }}
+                    {% else %}
+                    <i class="fa-solid fa-circle-user fs-1"></i>
+                    <b>Logged out.</b>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-sm-4 text-center">
+                <div class="fw-bold text-light">
+                    {% if request.session %}
+                    {{ request.session.email }}
+                    {% else %}
+                    <i class="fa-solid fa-circle-user fs-1"></i>
+                    <b>Logged out.</b>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Profile End -->
+        </div>
+        <!-- Header End -->
+
+
+        <!-- Content For Other Pages Start -->
+        <div class="row" style="min-height: 600px !important;">
+            <div class="col-sm-12">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        <!-- Content For Other Pages End -->
+
+
+        <!-- Footer Start -->
+        <div class="row bg-warning">
+            {% comment %} <div class="fs-5 text-end me-5 fw-bold">
+                &copy; 2026 Courier Management System. All Rights Reserved..
+            </div> {% endcomment %}
+        </div>
+        <!-- Footer End -->
+    </div>
+</body>
+
+</html>

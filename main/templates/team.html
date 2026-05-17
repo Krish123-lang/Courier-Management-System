@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+My Team Members
+{% endblock %}
+
+{% block content %}
+
+<div class="row mt-3">
+    <div class="col-sm-12">
+        <div class="h1 text-center fw-bold text-danger">My Team Members</div>
+        <div class="w-50 mx-auto my-3" style="border-bottom: 4px solid gray;"></div>
+    </div>
+</div>
+<div class="row mt-4 mb-5">
+    <div class="col-sm-11 mx-auto">
+        <!-- Cards Start -->
+        <div class="row">
+            <div class="col-sm-6 p-3">
+                <div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-4">
+                    <div class="row g-0">
+                        <div class="col-sm-4 bg-light bg-gradient d-flex align-items-center justify-content-center p-3">
+                            <div class="text-center">
+                                <div class="rounded-circle bg-white p-2 d-inline-block shadow-sm">
+                                    <img src="{% static 'images/yash.jpg' %}" class="card-img-top img-fluid p-3"
+                                        alt="#">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body p-4">
+                                <h4 class="card-title text-dark fw-bold mb-1">Krishna Mandal</h4>
+                                <h5 class="card-subtitle mb-3 text-primary fw-semibold">Group Leader</h5>
+                                <hr class="mt-0 mb-3">
+                                <p class="card-text text-muted small">
+                                    I am a student of Computer Science and Engineering at Government Polytechnic
+                                    Roorkee, Baheri, Bareilly. I have a strong passion for coding and web development.
+                                    As the team leader, I strive to guide my team towards success and innovation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 p-3">
+                <div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-4">
+                    <div class="row g-0">
+                        <div class="col-sm-4 bg-light bg-gradient d-flex align-items-center justify-content-center p-3">
+                            <div class="text-center">
+                                <div class="rounded-circle bg-white p-2 d-inline-block shadow-sm">
+                                    <img src="{% static 'images/abhishek.jpg' %}" class="card-img-top img-fluid p-3"
+                                        alt="#">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body p-4">
+                                <h4 class="card-title text-dark fw-bold mb-1">Abhishek Gupta</h4>
+                                <h5 class="card-subtitle mb-3 text-primary fw-semibold">Member</h5>
+                                <hr class="mt-0 mb-3">
+                                <p class="card-text text-muted small">
+                                    I am a student of Computer Science Engineering at Government Polytechnic Roorkee
+                                    Baheri Bareilly. I have a strong passion for Testing and Prompt Engineering.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 p-3">
+                <div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-4">
+                    <div class="row g-0">
+                        <div class="col-sm-4 bg-light bg-gradient d-flex align-items-center justify-content-center p-3">
+                            <div class="text-center">
+                                <div class="rounded-circle bg-white p-2 d-inline-block shadow-sm">
+                                    <img src="{% static 'images/saddam.jpg' %}" class="card-img-top img-fluid p-3"
+                                        alt="#">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body p-4">
+                                <h4 class="card-title text-dark fw-bold mb-1">Saddam Hussain</h4>
+                                <h5 class="card-subtitle mb-3 text-primary fw-semibold">Member</h5>
+                                <hr class="mt-0 mb-3">
+                                <p class="card-text text-muted small">
+                                    I am a student of Computer Science Engineering at Government Polytechnic Roorkee
+                                    Baheri Bareilly. I have a strong passion for Frontend Development.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 p-3">
+                <div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-4">
+                    <div class="row g-0">
+                        <div class="col-sm-4 bg-light bg-gradient d-flex align-items-center justify-content-center p-3">
+                            <div class="text-center">
+                                <div class="rounded-circle bg-white p-2 d-inline-block shadow-sm">
+                                    <img src="{% static 'images/nitish.jpg' %}" class="card-img-top img-fluid p-3"
+                                        alt="#">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body p-4">
+                                <h4 class="card-title text-dark fw-bold mb-1">Nitish Tiwari</h4>
+                                <h5 class="card-subtitle mb-3 text-primary fw-semibold">Member</h5>
+                                <hr class="mt-0 mb-3">
+                                <p class="card-text text-muted small">
+                                    I am a student of Computer Science Engineering at Government Polytechnic Roorkee
+                                    Baheri Bareilly. I have a strong passion for Database Management.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 p-3 mx-auto">
+                <div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-4">
+                    <div class="row g-0">
+                        <div class="col-sm-4 bg-light bg-gradient d-flex align-items-center justify-content-center p-3">
+                            <div class="text-center">
+                                <div class="rounded-circle bg-white p-2 d-inline-block shadow-sm">
+                                    <img src="{% static 'images/shoaib.jpg' %}" class="card-img-top img-fluid p-3"
+                                        alt="#">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body p-4">
+                                <h4 class="card-title text-dark fw-bold mb-1">Shoaib Akhtar</h4>
+                                <h5 class="card-subtitle mb-3 text-primary fw-semibold">Member</h5>
+                                <hr class="mt-0 mb-3">
+                                <p class="card-text text-muted small">
+                                    I am a student of Computer Science Engineering at Government Polytechnic Roorkee
+                                    Baheri Bareilly. I have a strong passion for AI/ML.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card Ends -->
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Value Added Services - PostOffice
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .card {
+        backdrop-filter: blur(6px);
+        border-radius: 16px;
+        transition: transform 0.8s ease, box-shadow 0.8s ease
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6)
+    }
+
+    .icon-circle {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem
+    }
+</style>
+
+
+<div class="row mt-5">
+    <div class="col-sm-12">
+        <div class="text-danger text-center p-3 display-4 fw-bold">Value-Added Services
+            <div class="w-50 d-block mx-auto" style="border-bottom: 3px solid black !important;">
+            </div>
+        </div>
+        <p class="text-center my-2">Make your parcel experience more secure, faster, and more convenient.</p>
+    </div>
+</div>
+<div class="row my-5">
+    <div class="col-sm-11 mx-auto">
+        <div class="row">
+            <div class="col-sm-4 p-4">
+                <div class="card p-3">
+                    <div class="card-body">
+                        <div class="card-title h5">
+                            <div class="icon-circle text-dark"
+                                style="background:linear-gradient(135deg,#e6f0ff,#d5e8ff);">
+                                <i class="fas text-danger fa-truck"></i>
+                            </div>
+                            <div class="h4 text-center my-2">Parcel Tracking<br><small>(Tracking System)</small></div>
+                        </div>
+                        <p class="card-text mt-2">
+                            Customers can easily check the real-time location and status of their
+                            parcels.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 p-4">
+                <div class="card p-3">
+                    <div class="card-body">
+                        <div class="card-title h5">
+                            <div class="icon-circle text-dark"
+                                style="background:linear-gradient(135deg,#fff4e0,#ffe7c7);">
+                                <i class="fas text-danger fa-box-open"></i>
+                            </div>
+                            <div class="h4 text-center my-2">Pickup Service<br><small>(Pickup from Home)</small></div>
+                        </div>
+                        <p class="card-text mt-2">
+                            We collect the parcel from your home or office and start the delivery
+                            process.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 p-4">
+                <div class="card p-3">
+                    <div class="card-body">
+                        <div class="card-title h5">
+                            <div class="icon-circle text-dark"
+                                style="background:linear-gradient(135deg,#e8ffe9,#d9fff1);">
+                                <i class="fas text-danger fa-money-bill-wave"></i>
+                            </div>
+                            <div class="h4 text-center my-2">COD (Cash on Delivery)</div>
+                        </div>
+                        <p class="card-text mt-2">
+                            Customers get the option to pay in cash at the time of delivery.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 p-4">
+                <div class="card p-3">
+                    <div class="card-body">
+                        <div class="card-title h5">
+                            <div class="icon-circle text-dark"
+                                style="background:linear-gradient(135deg,#f9d5ff,#f5b0ff);">
+                                <i class="fas text-danger fa-shield-alt"></i>
+                            </div>
+                            <div class="h4 text-center my-2">Insurance<br><small>(Protection)</small></div>
+                        </div>
+                        <p class="card-text mt-2">
+                            Ensure extra protection by insuring valuable items.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 p-4">
+                <div class="card p-3">
+                    <div class="card-body">
+                        <div class="card-title h5">
+                            <div class="icon-circle text-dark"
+                                style="background:linear-gradient(135deg,#ffebc3,#ffe0a1);">
+                                <i class="fas text-danger fa-gift"></i>
+                            </div>
+                            <div class="h4 text-center my-2">Packaging Service</div>
+                        </div>
+                        <p class="card-text mt-2">
+                            Preparing items with safe and strong packaging.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 p-4">
+                <div class="card p-3">
+                    <div class="card-body">
+                        <div class="card-title h5">
+                            <div class="icon-circle text-dark"
+                                style="background:linear-gradient(135deg,#c3f0ff,#a1e0ff);">
+                                <i class="fas text-danger fa-warehouse"></i>
+                            </div>
+                            <div class="h4 text-center my-2">Warehousing & Storage<br><small>(Storage Service)</small>
+                            </div>
+                        </div>
+                        <p class="card-text mt-2">
+                            Facility to store and manage goods securely.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

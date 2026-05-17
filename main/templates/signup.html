@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Postoffice - Sign Yourself
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center py-5">
+    <div class="col-sm-6">
+        <form method="post" enctype="multipart/form-data" class="border border-2 rounded rounded-4 shadow-lg p-4">
+            {% csrf_token %}
+            <div class="h2 text-center mb-5 text-danger">Sign Up
+                <div class="w-25 d-block mx-auto mt-2 text-secondary" style="border-bottom: 2px solid  !important;">
+                </div>
+            </div>
+            <div class="row mb-4">
+                {% for message in messages %}
+                <div class="text-center fs-5 text-primary" role="alert">
+                    <div class="fw-bold text-danger">Message : </div> {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Full Name" required>
+                <label for="name">Full Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" name="email" class="form-control" id="email" placeholder="Email Address" required>
+                <label for="email">Email Address</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="number" name="num" class="form-control" id="phone" placeholder="Phone Number" required
+                    min="10">
+                <label for="phone">Phone Number</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" name="address" class="form-control" id="address"
+                    placeholder="Enter Your Address here" required>
+                <label for="address">Your Home Address</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="file" name="image" class="form-control" required>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" min="5" name="pass" class="form-control" id="password" placeholder="Password"
+                    required>
+                <label for="password">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" min="5" name="cpass" class="form-control" id="confirmPassword"
+                    placeholder="Confirm Password" required>
+                <label for="confirmPassword">Confirm Password</label>
+            </div>
+            <input type="submit" value="Create Account" class="btn btn-danger w-100 mt-3">
+            <p class="text-center mt-3">Already have an account?
+                <a href="{% url 'login' %}">Login here</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
