@@ -33,29 +33,29 @@
             opacity: 0.8;
         }
 
-        #preloader {
+        {% comment %} #preloader {
             background: white url("{% static 'images/preloader.gif' %}") no-repeat center;
             height: 100%;
             width: 100%;
             position: fixed;
             z-index: 9999;
             background-size: 20%;
-        }
+        } {% endcomment %}
     </style>
 
-    <script>
+    {% comment %} <script>
         window.addEventListener('load', function () {
             const loader = document.getElementById("preloader")
             if (loader) {
                 loader.style.display = "none";
             }
         })
-    </script>
+    </script> {% endcomment %}
 </head>
 
 <body>
     <!-- Preloader Start -->
-    <div id="preloader"></div>
+    {% comment %} <div id="preloader"></div> {% endcomment %}
     <!-- Preloader End -->
 
 
@@ -64,10 +64,10 @@
             <div class="col-sm-11 mx-auto">
                 <div class="row">
                     <div class="col-sm-2">
-                        {% comment %} <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid ms-4 w-75"> {% endcomment %}
+                        <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid ms-4 w-75">
                     </div>
                     <div class="col-sm-10">
-                        {% comment %} <div class="row">
+                        <div class="row">
                             <div class="col-sm-5">
                                 <b>
                                     <i class="fa-solid fa-envelope fa-flip mt-4 text-danger fs-2"></i>
@@ -103,7 +103,7 @@
                                     <i class="fa-brands fa-youtube fs-3"></i>
                                 </a>
                             </div>
-                        </div> {% endcomment %}
+                        </div>
                         <!-- NavBar Start -->
                         <div class="row pt-3">
                             <div class="col-sm-12">
@@ -123,7 +123,7 @@
                                                         <i class="fa-solid fa-house"></i> Home
                                                     </a>
                                                 </li>
-                                                {% comment %} <li class="nav-item">
+                                                <li class="nav-item">
                                                     <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
                                                         href="{% url 'about' %}">
                                                         <i class="fa-solid fa-circle-info"></i> About Us
@@ -156,7 +156,7 @@
                                                         href="{% url 'contact' %}">
                                                         <i class="fa-solid fa-phone"></i> Contact Us
                                                     </a>
-                                                </li> {% endcomment %}
+                                                </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
                                                         aria-current="page" href="{% url 'signup' %}">
@@ -189,7 +189,7 @@
 
 
         <!-- Footer Start -->
-        {% comment %} <div class="row bg-dark text-white pt-5 pb-3">
+        <div class="row bg-dark text-white pt-5 pb-3">
             <div class="col-sm-11 mx-auto border-bottom border-secondary">
                 <div class="row mb-3">
                     <div class="col-sm-5">
@@ -302,7 +302,7 @@
                     &copy; 2026 Courier Management System. All Rights Reserved.
                 </a>
             </div>
-        </div> {% endcomment %}
+        </div>
         <!-- Footer End -->
     </div>
 </body>
