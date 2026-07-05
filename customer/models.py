@@ -34,7 +34,7 @@ class Shipment(models.Model):
     delivery_status = models.CharField(max_length=50, default="Pending", choices=STATUS_CHOICES, null=True)
     delivered_at = models.DateTimeField(null=True, blank=True)
     status_updated_at = models.DateTimeField(null=True, blank=True)
-    current_location = models.CharField(max_length=50, null=True)
+    current_location = models.CharField(max_length=100, null=True, blank=True)
     sender_name = models.CharField(max_length=100, null=True)
     pickupAddress = models.TextField(null=True)
     senderNumber = models.CharField(max_length=15, null=True)
@@ -50,7 +50,12 @@ class Shipment(models.Model):
         return str(self.trackingId or self.id)
 
     def save(self, *args, **kwargs):
-        # Update status_updated_at whenever status changes
+        if not self.pk:
+            if not self.delivered_at:
+                self.delivered_at = timezone.now()
+            if not self.current_location and self.customerid and self.customerid.address:
+                self.current_location = self.customerid.address
+
         if self.pk:
             try:
                 old = Shipment.objects.get(pk=self.pk)
@@ -62,7 +67,7 @@ class Shipment(models.Model):
 
         if self.delivery_status != old_status:
             self.status_updated_at = timezone.now()
-            if str(self.delivery_status).lower() == 'DELIVERED':
+            if str(self.delivery_status).lower() == 'delivered':
                 self.delivered_at = timezone.now()
 
         super().save(*args, **kwargs)

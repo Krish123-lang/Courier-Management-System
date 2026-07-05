@@ -15,140 +15,75 @@
     <title>User Dashboard</title>
 
     <style>
+        body { background: linear-gradient(135deg, #f8fbff, #eef4ff); color: #123; font-family: 'Segoe UI', Arial, sans-serif; }
+        .abc { border-radius: 999px; transition: all 0.25s ease; }
         .abc:hover {
-            background: linear-gradient(to left, red, yellow) !important;
-            color: black !important;
-            border-radius: 10px !important;
+            background: linear-gradient(135deg, #ff5b5b, #dc3545) !important;
+            color: #fff !important;
+            transform: translateX(4px);
         }
+        .glass-card { background: rgba(255,255,255,0.86); backdrop-filter: blur(10px); border: 1px solid rgba(13,110,253,0.12); box-shadow: 0 14px 38px rgba(15,23,42,.12); }
     </style>
 </head>
 
 <body>
-    <div class="container-fluid">
-
-
-        <!-- Header Start -->
-        <div class="row py-3 bg-danger shadow-lg ">
-            <!-- Sidebar Start -->
-            <div class="col-sm-1">
-                <a class="text-light mx-auto ps-3 text-center d-block" data-bs-toggle="offcanvas"
-                    href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                    <i class="fa-solid fa-bars fs-3"></i>
-                </a>
-                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
-                    aria-labelledby="offcanvasExampleLabel">
-                    <div class="offcanvas-header">
-                        <div class="offcanvas-title padi mx-auto" id="offcanvasExampleLabel">
-                            <div class="ms-5 fs-1 fw-bold">
-                                {% comment %} BoxBird {% endcomment %}
+    <div class="container-fluid px-0">
+        <header class="py-3 shadow-sm" style="background: linear-gradient(90deg, #dc3545, #b91c1c);">
+            <div class="container-fluid px-4">
+                <div class="row align-items-center gy-3">
+                    <div class="col-lg-2 col-md-3 col-sm-4">
+                        <a class="text-light d-flex align-items-center gap-2 text-decoration-none" data-bs-toggle="offcanvas"
+                            href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                            <i class="fa-solid fa-bars fs-4"></i>
+                            <span class="fw-semibold">Menu</span>
+                        </a>
+                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                            aria-labelledby="offcanvasExampleLabel">
+                            <div class="offcanvas-header">
+                                <div class="offcanvas-title fw-bold fs-4" id="offcanvasExampleLabel">BoxBird</div>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li class="nav-item"><a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt me-2"></i>User Dashboard</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'book' %}"><i class="fas fa-plus-square me-2"></i>Book Courier</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'hist' %}"><i class="fas fa-box me-2"></i>History</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'bill' %}"><i class="fas fa-file-invoice-dollar me-2"></i>Billings</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'help' %}"><i class="fas fa-question-circle me-2"></i>Help Center</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'profile' %}"><i class="fas fa-user-circle me-2"></i>My Profile</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'signout' %}"><i class="fas fa-sign-out-alt me-2"></i>Sign Out</a></li>
+                                </ul>
                             </div>
                         </div>
-                        <button type="button" class="bg-light btn-close" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
                     </div>
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'dashboard' %}">
-                                    <i class="fas fa-tachometer-alt me-1"></i>
-                                    User Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'book' %}">
-                                    <i class="fas fa-plus-square me-1"></i>
-                                    Book Courier
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'hist' %}">
-                                    <i class="fas fa-box me-1"></i>
-                                    History
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'bill' %}">
-                                    <i class="fas fa-file-invoice-dollar me-1"></i>
-                                    Billings
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'help' %}">
-                                    <i class="fas fa-question-circle me-1"></i>
-                                    Help Center
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'profile' %}">
-                                    <i class="fas fa-user-circle me-1"></i>
-                                    My Profile
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3 ms-3 fs-5 my-1 abc" href="{% url 'signout' %}">
-                                    <i class="fas fa-sign-out-alt me-1"></i>
-                                    Sign Out
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="col-lg-10 col-md-9 col-sm-8">
+                        <div class="row align-items-center text-white g-3">
+                            <div class="col-md-4 text-center text-md-start">
+                                <div class="fw-bold fs-5">{{ request.session.name|default:'Welcome back' }}</div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="small opacity-75">{{ request.session.number|default:'Phone pending' }}</div>
+                            </div>
+                            <div class="col-md-4 text-center text-md-end">
+                                <div class="small opacity-75">{{ request.session.email|default:'Account inactive' }}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Sidebar Start -->
+        </header>
 
-            <!-- Profile Start -->
-            <div class="col-sm-4 text-center">
-                <div class="fw-bold text-light">
-                    {% if request.session %}
-                    {{ request.session.name }}
-                    {% else %}
-                    <i class="fa-solid fa-circle-user fs-1"></i>
-                    <b>Logged out.</b>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-sm-3 text-center">
-                <div class="fw-bold text-light">
-                    {% if request.session %}
-                    {{ request.session.number }}
-                    {% else %}
-                    <i class="fa-solid fa-circle-user fs-1"></i>
-                    <b>Logged out.</b>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-sm-4 text-center">
-                <div class="fw-bold text-light">
-                    {% if request.session %}
-                    {{ request.session.email }}
-                    {% else %}
-                    <i class="fa-solid fa-circle-user fs-1"></i>
-                    <b>Logged out.</b>
-                    {% endif %}
-                </div>
-            </div>
-            <!-- Profile End -->
-        </div>
-        <!-- Header End -->
-
-
-        <!-- Content For Other Pages Start -->
-        <div class="row" style="min-height: 600px !important;">
+        <div class="row py-4" style="min-height: 620px !important;">
             <div class="col-sm-12">
-                {% block content %}
-                {% endblock %}
+                {% block content %}{% endblock %}
             </div>
         </div>
-        <!-- Content For Other Pages End -->
 
-
-        <!-- Footer Start -->
-        <div class="row bg-warning">
-            <div class="fs-5 text-end me-5 fw-bold">
-                &copy; 2026 Courier Management System. All Rights Reserved..
+        <footer class="bg-dark text-white py-3">
+            <div class="container-fluid px-4 text-center small text-light-emphasis">
+                © 2026 BoxBird Logistics. All rights reserved.
             </div>
-        </div>
-        <!-- Footer End -->
+        </footer>
     </div>
 </body>
 

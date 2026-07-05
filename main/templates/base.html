@@ -1,310 +1,101 @@
 {% load static %}
 
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-    <title>
-        {% block title %}
-        {% endblock %}
-    </title>
-    <link href="{% static 'images/logo.jpg' %}" type="image/x-icon" rel="icon" />
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/all.css' %}" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/logo.jpg' %}" type="image/x-icon">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'css/all.css' %}" rel="stylesheet">
     <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
     <script src="{% static 'js/all.js' %}"></script>
-
     <style>
-        .abcd {
-            transition: 0.7s;
-        }
-
-        .abcd:hover {
-            box-shadow: 0px 0px 10px black;
-            transition: 0.7s;
-            transform: scale(1.1);
-        }
-
-        .hover-text-danger:hover {
-            color: red !important;
-        }
-
-        .btn-link:hover {
-            opacity: 0.8;
-        }
-
-        {% comment %} #preloader {
-            background: white url("{% static 'images/preloader.gif' %}") no-repeat center;
-            height: 100%;
-            width: 100%;
-            position: fixed;
-            z-index: 9999;
-            background-size: 20%;
-        } {% endcomment %}
+        body { background: linear-gradient(135deg, #f7fbff, #eef4ff); color: #123; font-family: 'Segoe UI', Arial, sans-serif; }
+        .navbar-brand img { height: 48px; }
+        .nav-link { border-radius: 999px; transition: all 0.25s ease; }
+        .nav-link:hover, .nav-link.active { background: #dc3545; color: #fff !important; transform: translateY(-1px); }
+        .hero-card, .glass-card { background: rgba(255,255,255,0.82); backdrop-filter: blur(12px); border: 1px solid rgba(13,110,253,0.12); box-shadow: 0 16px 40px rgba(15,23,42,.12); }
+        .btn-danger-soft { background: linear-gradient(135deg, #ff5b5b, #dc3545); color: #fff; border: 0; }
+        .btn-danger-soft:hover { color: #fff; transform: translateY(-2px); }
+        .text-gradient { background: linear-gradient(90deg, #dc3545, #0d6efd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
-
-    {% comment %} <script>
-        window.addEventListener('load', function () {
-            const loader = document.getElementById("preloader")
-            if (loader) {
-                loader.style.display = "none";
-            }
-        })
-    </script> {% endcomment %}
 </head>
-
 <body>
-    <!-- Preloader Start -->
-    {% comment %} <div id="preloader"></div> {% endcomment %}
-    <!-- Preloader End -->
-
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-11 mx-auto">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid ms-4 w-75">
+    <div class="container-fluid px-0">
+        <header class="py-3 border-bottom bg-white shadow-sm">
+            <div class="container">
+                <div class="row align-items-center gy-3">
+                    <div class="col-lg-3 col-md-4 col-sm-6 text-center text-md-start">
+                        <a href="{% url 'home' %}" class="navbar-brand d-flex align-items-center gap-2 text-decoration-none">
+                            <img src="{% static 'images/logo.jpg' %}" alt="BoxBird logo" class="rounded-circle">
+                            <span class="fw-bold fs-4 text-danger">BoxBird</span>
+                        </a>
                     </div>
-                    <div class="col-sm-10">
-                        <div class="row">
-                            <div class="col-sm-5">
-                                <b>
-                                    <i class="fa-solid fa-envelope fa-flip mt-4 text-danger fs-2"></i>
-                                    Mail Us- greatvarshney983734@gmail.com
-                                </b>
-                            </div>
-                            <div class="col-sm-3">
-                                <b>
-                                    <i class="fa-solid fa-phone fa-shake pt-1 mt-4 text-danger fs-2"></i>
-                                    Call Us-
-                                    9119015065
-                                </b>
-                            </div>
-                            <div class="col-sm-4 pt-4">
-                                <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
-                                    aria-label="WhatsApp">
-                                    <i class="fa-brands fa-whatsapp fs-3"></i>
-                                </a>
-                                <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
-                                    aria-label="Instagram">
-                                    <i class="fa-brands fa-instagram fs-3"></i>
-                                </a>
-                                <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
-                                    aria-label="Linkedin">
-                                    <i class="fa-brands fa-linkedin fs-3"></i>
-                                </a>
-                                <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
-                                    aria-label="GitHub">
-                                    <i class="fa-brands fa-github fs-3"></i>
-                                </a>
-                                <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
-                                    aria-label="Snapchat">
-                                    <i class="fa-brands fa-youtube fs-3"></i>
-                                </a>
-                            </div>
+                    <div class="col-lg-6 col-md-8">
+                        <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 small text-muted">
+                            <span><i class="fa-solid fa-envelope text-danger me-1"></i> support@boxbird.com</span>
+                            <span><i class="fa-solid fa-phone text-danger me-1"></i> +91 9119015065</span>
                         </div>
-                        <!-- NavBar Start -->
-                        <div class="row pt-3">
-                            <div class="col-sm-12">
-                                <nav class="navbar navbar-expand-lg">
-                                    <div class="container-fluid">
-                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#navbarSupportedContent"
-                                            aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">
-                                            <span class="navbar-toggler-icon"></span>
-                                        </button>
-                                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                                <li class="nav-item">
-                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
-                                                        href="{% url 'home' %}">
-                                                        <i class="fa-solid fa-house"></i> Home
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
-                                                        href="{% url 'about' %}">
-                                                        <i class="fa-solid fa-circle-info"></i> About Us
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 dropdown-toggle"
-                                                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fa-solid fa-cogs"></i> Services
-                                                    </a>
-                                                    <ul class="dropdown-menu bg-danger">
-                                                        <li><a class="dropdown-item abcd text-light bg-danger"
-                                                                href="{% url 'dom' %}">Domestic
-                                                                Services</a>
-                                                        </li>
-                                                        <li><a class="dropdown-item abcd text-light bg-danger"
-                                                                href="{% url 'vas' %}">Value Added
-                                                                Services</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
-                                                        aria-current="page" href="{% url 'team' %}">
-                                                        <i class="fa-solid fa-user-group"></i> Team
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
-                                                        href="{% url 'contact' %}">
-                                                        <i class="fa-solid fa-phone"></i> Contact Us
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
-                                                        aria-current="page" href="{% url 'signup' %}">
-                                                        <i class="fa-solid fa-address-card"></i> Sign Up
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link px-3 mx-1 text-light bg-danger rounded-3 abcd"
-                                                        href="{% url 'login' %}">
-                                                        <i class="fa-solid fa-user"></i> User login
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </nav>
-                            </div>
-                        </div>
-                        <!-- NavBar End -->
+                    </div>
+                    <div class="col-lg-3 text-center text-lg-end">
+                        <a href="{% url 'login' %}" class="btn btn-danger-soft px-4 rounded-pill">Login / Register</a>
                     </div>
                 </div>
-            </div>
-        </div>
-
-
-
-        {% block content %}
-
-        {% endblock %}
-
-
-        <!-- Footer Start -->
-        <div class="row bg-dark text-white pt-5 pb-3">
-            <div class="col-sm-11 mx-auto border-bottom border-secondary">
-                <div class="row mb-3">
-                    <div class="col-sm-5">
-                        <div class="h5 text-danger fw-bold mb-3 border-bottom d-inline-block border-danger pb-2">
-                            BOXBIRD LOGISTICS
-                        </div>
-                        <p class="text-light fs-6">
-                            BoxBird Logistics is dedicated to providing reliable, fast, and secure courier services
-                            globally. We leverage cutting-edge technology to offer *real-time tracking*, seamless
-                            booking, and personalized delivery solutions for individuals and businesses alike.
-                        </p>
-                        <p class="text-secondary small">
-                            Our mission is to connect communities and commerce with efficiency and care, ensuring every
-                            parcel reaches its destination safely and on time. Experience logistics redefined.
-                        </p>
-                    </div>
-                    <div class="col-sm-3">
-                        <h5 class="text-white fw-bold mb-3">
-                            USEFUL LINKS
-                        </h5>
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="{% url 'home' %}"
-                                    class="btn btn-link text-danger text-decoration-none fw-light" aria-current="page">
-                                    <i class="fa-solid fa-house fa-fw me-2"></i> Home
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'about' %}"
-                                    class="btn btn-link text-danger text-decoration-none fw-light">
-                                    <i class="fa-solid fa-circle-info fa-fw me-2"></i> About Us
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'dom' %}"
-                                    class="btn btn-link text-danger text-decoration-none fw-light">
-                                    <i class="fa-solid fa-cogs fa-fw me-2"></i> Services
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'login' %}"
-                                    class="btn btn-link text-danger text-decoration-none fw-light">
-                                    <i class="fa-solid fa-right-to-bracket fa-fw me-2"></i> Login
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'contact' %}"
-                                    class="btn btn-link text-danger text-decoration-none fw-light">
-                                    <i class="fa-solid fa-list-check fa-fw me-2"></i> Feedback
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'contact' %}"
-                                    class="btn btn-link text-danger text-decoration-none fw-light">
-                                    <i class="fas fa-headset fa-fw me-2"></i> Contact Us
-                                </a>
-                            </li>
+                <nav class="navbar navbar-expand-lg px-0 mt-3">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="mainNav">
+                        <ul class="navbar-nav gap-2">
+                            <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'home' %}"><i class="fa-solid fa-house me-1"></i> Home</a></li>
+                            <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'about' %}"><i class="fa-solid fa-circle-info me-1"></i> About</a></li>
+                            <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'dom' %}"><i class="fa-solid fa-box me-1"></i> Domestic</a></li>
+                            <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'vas' %}"><i class="fa-solid fa-gift me-1"></i> Value Added</a></li>
+                            <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'team' %}"><i class="fa-solid fa-users me-1"></i> Team</a></li>
+                            <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'contact' %}"><i class="fa-solid fa-headset me-1"></i> Contact</a></li>
                         </ul>
                     </div>
-                    <div class="col-sm-4">
-                        <h5 class="text-white fw-bold mb-3">
-                            CONTACT INFO
-                        </h5>
-                        <div class="mb-3 d-flex align-items-start">
-                            <i class="fa-solid fa-location-dot fa-lg text-danger me-3 mt-1"></i>
-                            <address class="text-secondary mb-0 small">
-                                PostOffice Address Line, Main St, Suite 100, City, Country 00000
-                            </address>
-                        </div>
-                        <div class="mb-4 d-flex align-items-center">
-                            <i class="fa-solid fa-phone fa-lg text-danger me-3"></i>
-                            <a href="tel:9119015065"
-                                class="text-secondary text-decoration-none small hover-text-danger">
-                                +91 9119015065
-                            </a>
-                        </div>
-                        <div class="h5 text-white fw-bold mt-5 mb-3">
-                            FOLLOW US
-                        </div>
-                        <div class="d-flex flex-wrap">
-                            <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
-                                aria-label="WhatsApp">
-                                <i class="fa-brands fa-whatsapp fs-3"></i>
-                            </a>
-                            <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
-                                aria-label="Instagram">
-                                <i class="fa-brands fa-instagram fs-3"></i>
-                            </a>
-                            <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
-                                aria-label="Linkedin">
-                                <i class="fa-brands fa-linkedin fs-3"></i>
-                            </a>
-                            <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
-                                aria-label="GitHub">
-                                <i class="fa-brands fa-github fs-3"></i>
-                            </a>
-                            <a href="#" target="_blank" class="btn btn-outline-danger rounded-circle me-2 mb-2 p-2"
-                                aria-label="Snapchat">
-                                <i class="fa-brands fa-youtube fs-3"></i>
-                            </a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="bg-dark text-white pt-5 pb-3 mt-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <h5 class="text-danger fw-bold">BoxBird Logistics</h5>
+                        <p class="text-light-emphasis">Fast, reliable, and secure parcel delivery for homes and businesses across India.</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="fw-bold mb-3">Quick Links</h6>
+                        <ul class="list-unstyled">
+                            <li><a href="{% url 'home' %}" class="text-light-emphasis text-decoration-none">Home</a></li>
+                            <li><a href="{% url 'about' %}" class="text-light-emphasis text-decoration-none">About</a></li>
+                            <li><a href="{% url 'contact' %}" class="text-light-emphasis text-decoration-none">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6 class="fw-bold mb-3">Contact</h6>
+                        <p class="text-light-emphasis mb-2"><i class="fa-solid fa-phone me-2"></i> +91 9119015065</p>
+                        <p class="text-light-emphasis mb-2"><i class="fa-solid fa-envelope me-2"></i> support@boxbird.com</p>
+                        <div class="d-flex gap-2 mt-3">
+                            <a href="https://wa.me/9119015065" class="btn btn-outline-light btn-sm rounded-pill" target="_blank">WhatsApp</a>
+                            <a href="https://www.instagram.com" class="btn btn-outline-light btn-sm rounded-pill" target="_blank">Instagram</a>
                         </div>
                     </div>
                 </div>
+                <div class="border-top border-secondary mt-4 pt-3 text-center text-light-emphasis small">
+                    © 2026 BoxBird Logistics. All rights reserved.
+                </div>
             </div>
-        </div>
-
-        <div class="row bg-black">
-            <div class="col-sm-12 py-3 text-end">
-                <a href="#" target="_blank" class="text-secondary text-decoration-none small">
-                    &copy; 2026 Courier Management System. All Rights Reserved.
-                </a>
-            </div>
-        </div>
-        <!-- Footer End -->
+        </footer>
     </div>
 </body>
-
 </html>

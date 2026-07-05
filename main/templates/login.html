@@ -1,48 +1,41 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}
-PostOffice - Log Yourself
-{% endblock %}
+{% block title %}BoxBird - Login{% endblock %}
 
 {% block content %}
-<div class="row mt-5">
-    <div class="col-sm-6 mx-auto my-auto">
-        <div class="h3 text-center text-info my-4">Log in yourself!</div>
-        <form method="post" class="shadow-lg p-5 bg-light rounded-5">
-            <div class="row mb-2">
-                <div class="col-sm-10 mx-auto">
-                    {% for message in messages %}
-                    <div class="alert alert-danger fade show" role="alert">
-                        <strong>Message : </strong> {{ message }}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold text-danger">Welcome back</h2>
+                        <p class="text-muted mb-0">Sign in to manage your shipments</p>
                     </div>
-                    {% endfor %}
+                    {% if messages %}
+                    <div class="mb-3">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags|default:'danger' }} mb-2" role="alert">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Email address</label>
+                            <input name="email" type="email" required class="form-control form-control-lg" placeholder="Enter your email">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Password</label>
+                            <input name="pass" type="password" required class="form-control form-control-lg" placeholder="Enter your password">
+                        </div>
+                        <button type="submit" class="btn btn-danger-soft w-100 py-2 rounded-pill">Login to dashboard</button>
+                    </form>
+                    <p class="text-center mt-4 mb-0">New here? <a href="{% url 'signup' %}" class="text-danger text-decoration-none">Create an account</a></p>
                 </div>
             </div>
-            {% csrf_token %}
-            Hello Sir! Enter Your User Id
-            <div class="input-group mb-3 shadow-lg">
-                <i class="input-group-text bg-danger text-light p-3">
-                    <i class="fa-solid fa-user fs-2"></i>
-                </i>
-                <input name="email" type="text" required placeholder="Enter Your Email" class="form-control p-3">
-            </div>
-            Enter Your Password
-            <div class="input-group mb-5 shadow-lg">
-                <i class="input-group-text bg-danger text-light p-3">
-                    <i class="fa-solid fa-key fs-2"></i>
-                </i>
-                <input name="pass" type="password" required placeholder="Enter your password" class="form-control p-3">
-            </div>
-            <input type="submit" value="Enter into DashBoard" class="form-control btn btn-success text-light">
-        </form>
+        </div>
     </div>
 </div>
-<div class="row mb-5 mt-3">
-    <div class="col-sm-4 mx-auto">
-        If you have no account than click on it
-        <a href="{% url 'signup' %}">Sign Up Yourself!</a>
-    </div>
-</div>
-
 {% endblock %}

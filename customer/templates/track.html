@@ -35,7 +35,17 @@ Track Your Order
                     </div>
                     <div class="card-body">
                         <p class="card-text fs-5">Tracking ID: <b> {{s.trackingId}} </b></p>
-                        <p class="card-text">Estimated Delivery: <b> {{ s.delivered_at }} </b></p>
+                        <p class="card-text">
+                            Estimated Delivery: <b>
+                                {% if s.delivery_status == "DELIVERED" and s.delivered_at %}
+                                    {{ s.delivered_at|date:"Y-m-d h:i A" }}
+                                {% elif s.status_updated_at %}
+                                    {{ s.status_updated_at|date:"Y-m-d h:i A" }}
+                                {% else %}
+                                    TBD
+                                {% endif %}
+                            </b>
+                        </p>
 
                         <h6 class="mt-4 mb-3 border-bottom pb-2 text-secondary">Shipment History</h6>
                         <ul class="list-group list-group-flush">
