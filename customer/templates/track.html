@@ -35,6 +35,12 @@ Track Your Order
                     </div>
                     <div class="card-body">
                         <p class="card-text fs-5">Tracking ID: <b>{{ shipment.trackingId }}</b></p>
+                        {% if qr_code %}
+                        <div class="mb-3 text-center">
+                            <img src="{{ qr_code }}" alt="Shipment QR code" class="img-fluid" style="max-width: 200px;" />
+                            <p class="small text-muted mt-2">Scan to view shipment tracking</p>
+                        </div>
+                        {% endif %}
                         <p class="card-text">
                             Updated at: <b>
                                 {% if shipment.status_updated_at %}

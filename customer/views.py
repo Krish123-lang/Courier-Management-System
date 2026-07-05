@@ -1,4 +1,10 @@
+import base64
+import io
+import re
+
+import qrcode
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from datetime import datetime
 from django.contrib import messages
 from django.core.validators import validate_email
@@ -6,7 +12,6 @@ from django.core.exceptions import ValidationError
 from .models import *
 from main.models import *
 from django.shortcuts import get_object_or_404
-import re
 
 
 def _build_image_url(image_value) -> str:
@@ -22,6 +27,21 @@ def _build_image_url(image_value) -> str:
 
 def _is_valid_phone(phone: str) -> bool:
     return bool(re.fullmatch(r"\d{10}", phone))
+
+
+def _build_qr_code_data_uri(data: str) -> str:
+    qr = qrcode.QRCode(version=1, box_size=6, border=2)
+    qr.add_data(data)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    buffer = io.BytesIO()
+    img.save(buffer, format="PNG")
+    encoded = base64.b64encode(buffer.getvalue()).decode()
+    return f"data:image/png;base64,{encoded}"
+
+
+def _build_tracking_url(request, tracking_id: str) -> str:
+    return request.build_absolute_uri(reverse("track") + f"?id={tracking_id}")
 
 # Create your views here.
 
@@ -60,9 +80,13 @@ def track(request):
     tid = request.GET.get("id")
     shipment = Shipment.objects.filter(trackingId=tid).order_by("-created_at").first() if tid else None
     tracking_history = shipment.tracking_history.all() if shipment else []
+    qr_code = None
+    if shipment and shipment.trackingId:
+        qr_code = _build_qr_code_data_uri(_build_tracking_url(request, shipment.trackingId))
     data = {
         "shipment": shipment,
         "tracking_history": tracking_history,
+        "qr_code": qr_code,
     }
     return render(request, "track.html", data)
 
@@ -181,6 +205,10 @@ def bill(request):
 
     invoices = Invoice.objects.filter(user=user_obj).order_by("-created_at")
     payment_methods = PaymentMethod.objects.filter(user=user_obj).order_by("-created_at")
+    for inv in invoices:
+        inv.qr_code = None
+        if inv.booking and inv.booking.trackingId:
+            inv.qr_code = _build_qr_code_data_uri(_build_tracking_url(request, inv.booking.trackingId))
     context = {"invoices": invoices, "payment_methods": payment_methods}
     return render(request, "bill.html", context)
 

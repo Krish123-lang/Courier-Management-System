@@ -65,6 +65,11 @@ Billings For Your All Orders
                                             <a href="/{{ inv.pdf }}" class="btn btn-sm btn-outline-primary">
                                                 <i class="fas fa-download"></i> PDF
                                             </a>
+                                            {% if inv.qr_code %}
+                                            <div class="mt-2">
+                                                <img src="{{ inv.qr_code }}" alt="Invoice QR code" class="img-fluid" style="max-width: 120px;" />
+                                            </div>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                     {% empty %}
