@@ -58,8 +58,12 @@ def track(request):
         return redirect("login")
 
     tid = request.GET.get("id")
-    active_shipments = Shipment.objects.filter(trackingId=tid).order_by("-created_at") if tid else Shipment.objects.none()
-    data = {"active_shipments": active_shipments}
+    shipment = Shipment.objects.filter(trackingId=tid).order_by("-created_at").first() if tid else None
+    tracking_history = shipment.tracking_history.all() if shipment else []
+    data = {
+        "shipment": shipment,
+        "tracking_history": tracking_history,
+    }
     return render(request, "track.html", data)
 
 

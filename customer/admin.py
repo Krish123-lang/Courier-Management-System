@@ -5,6 +5,8 @@ from .models import *
 
 admin.site.register(Invoice)
 admin.site.register(PaymentMethod)
+admin.site.register(ShipmentTracking)
+admin.site.register(DeliveryAssignment)
 
 class ShipmentAdmin(admin.ModelAdmin):
     list_display = ("id", "trackingId", "sender_name", "recipientName", "delivery_status")

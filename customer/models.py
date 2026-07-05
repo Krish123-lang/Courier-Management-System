@@ -162,8 +162,8 @@ class Shipment(models.Model):
 
     def _create_tracking_record(self, old_status: str = None):
         new_status = self.normalize_status(self.delivery_status)
-        old_status = self.normalize_status(old_status)
-        if old_status == new_status:
+        old_status = self.normalize_status(old_status) if old_status is not None else None
+        if old_status is not None and old_status == new_status:
             return
         ShipmentTracking.objects.create(
             shipment=self,
