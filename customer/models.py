@@ -1,22 +1,29 @@
+import re
+
 from django.db import models
 from django.utils import timezone
 from main.models import sign
 
 # Create your models here.
 
+TRACKING_NUMBER_REGEX = re.compile(r"^CMS-(\d{4})-(\d{6})$")
+
 
 def generate_tracking_number():
     prefix = "CMS"
     year = timezone.now().year
-    last_shipment = Shipment.objects.filter(trackingId__startswith=f"{prefix}-{year}-").order_by("trackingId").last()
-    if last_shipment and last_shipment.trackingId:
-        try:
-            seq = int(last_shipment.trackingId.rsplit("-", 1)[-1])
-        except ValueError:
-            seq = 0
-    else:
-        seq = 0
-    return f"{prefix}-{year}-{seq+1:06d}"
+    pattern = f"{prefix}-{year}-"
+    valid_tracking_ids = Shipment.objects.filter(trackingId__startswith=pattern).values_list("trackingId", flat=True)
+    max_seq = 0
+    for tracking_id in valid_tracking_ids:
+        if not tracking_id:
+            continue
+        match = TRACKING_NUMBER_REGEX.match(tracking_id)
+        if match and int(match.group(1)) == year:
+            seq = int(match.group(2))
+            if seq > max_seq:
+                max_seq = seq
+    return f"{prefix}-{year}-{max_seq+1:06d}"
 
 
 def generate_trackingId():
