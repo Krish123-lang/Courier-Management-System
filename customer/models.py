@@ -138,6 +138,55 @@ class Shipment(models.Model):
         current_index = self.WORKFLOW.index(current_status)
         return current_index + 1 < len(self.WORKFLOW) and self.WORKFLOW[current_index + 1] == new_status
 
+    WORKFLOW_ACTION_LABELS = {
+        STATUS_PENDING: (STATUS_APPROVED, "Approve shipment"),
+        STATUS_APPROVED: (STATUS_ASSIGNED, "Assign shipment"),
+        STATUS_ASSIGNED: (STATUS_PICKED_UP, "Mark picked up"),
+        STATUS_PICKED_UP: (STATUS_AT_ORIGIN_HUB, "Mark arrived at origin hub"),
+        STATUS_AT_ORIGIN_HUB: (STATUS_IN_TRANSIT, "Mark in transit"),
+        STATUS_IN_TRANSIT: (STATUS_AT_DESTINATION_HUB, "Mark arrived at destination hub"),
+        STATUS_AT_DESTINATION_HUB: (STATUS_OUT_FOR_DELIVERY, "Mark out for delivery"),
+        STATUS_OUT_FOR_DELIVERY: (STATUS_DELIVERED, "Mark delivered"),
+    }
+
+    def get_next_workflow_action(self):
+        current_status = self.normalize_status(self.delivery_status)
+        action = self.WORKFLOW_ACTION_LABELS.get(current_status)
+        if not action:
+            return None
+        return {"next_status": action[0], "label": action[1]}
+
+    def available_workflow_actions(self):
+        next_action = self.get_next_workflow_action()
+        return [next_action] if next_action else []
+
+    def perform_workflow_action(self, action_status: str, updated_by=None, location=None, remarks=None):
+        action_status = self.normalize_status(action_status)
+        next_action = self.get_next_workflow_action()
+        if not next_action or next_action["next_status"] != action_status:
+            raise ValueError(f"Invalid workflow action from {self.delivery_status} to {action_status}.")
+
+        self.delivery_status = action_status
+        if location is not None:
+            self.current_location = location
+        self.status_updated_at = timezone.now()
+        if self.delivery_status == self.STATUS_DELIVERED:
+            self.delivered_at = timezone.now()
+
+        self.save(
+            tracking_updated_by=updated_by,
+            tracking_remarks=remarks or next_action["label"],
+        )
+        return self
+
+    def get_next_workflow_action_label(self):
+        action = self.get_next_workflow_action()
+        return action["label"] if action else None
+
+    def get_next_workflow_action_status(self):
+        action = self.get_next_workflow_action()
+        return action["next_status"] if action else None
+
     def calculate_shipping_cost(self):
         self.base_charge = 50
         self.weight_charge = 0
@@ -160,7 +209,7 @@ class Shipment(models.Model):
 
         self.total_cost = self.shipping_cost
 
-    def _create_tracking_record(self, old_status: str = None):
+    def _create_tracking_record(self, old_status: str = None, remarks: str = "Status updated", updated_by=None):
         new_status = self.normalize_status(self.delivery_status)
         old_status = self.normalize_status(old_status) if old_status is not None else None
         if old_status is not None and old_status == new_status:
@@ -168,12 +217,15 @@ class Shipment(models.Model):
         ShipmentTracking.objects.create(
             shipment=self,
             status=new_status,
-            updated_by=self.customerid,
+            updated_by=updated_by or self.customerid,
             location=self.current_location,
-            remarks="Status updated",
+            remarks=remarks,
         )
 
     def save(self, *args, **kwargs):
+        tracking_updated_by = kwargs.pop("tracking_updated_by", None)
+        tracking_remarks = kwargs.pop("tracking_remarks", "Status updated")
+
         self.delivery_status = self.normalize_status(self.delivery_status)
         if not self.current_location and self.customerid and self.customerid.address:
             self.current_location = self.customerid.address
@@ -198,7 +250,7 @@ class Shipment(models.Model):
 
         super().save(*args, **kwargs)
 
-        self._create_tracking_record(old_status)
+        self._create_tracking_record(old_status, remarks=tracking_remarks, updated_by=tracking_updated_by)
 
 
 class ShipmentTracking(models.Model):

@@ -1,0 +1,40 @@
+{% extends 'Bases.html' %}
+{% load static %}
+
+{% block title %}
+Delivery Staff Actions
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h2>Delivery Staff Workflow</h2>
+            <p class="text-muted">Only the next valid action is shown for each assigned shipment.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for entry in shipment_actions %}
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ entry.shipment.trackingId }}</h5>
+                    <p class="card-text">Current status: <strong>{{ entry.shipment.delivery_status }}</strong></p>
+                    {% if entry.next_action %}
+                    <p class="card-text">Next action: <strong>{{ entry.next_action.label }}</strong></p>
+                    <a href="{% url 'delivery_staff_action' entry.shipment.id %}" class="btn btn-primary">Execute Action</a>
+                    {% else %}
+                    <span class="badge bg-secondary">No further actions</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">No shipments are currently assigned to you.</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

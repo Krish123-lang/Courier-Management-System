@@ -1,0 +1,36 @@
+{% extends 'Bases.html' %}
+{% load static %}
+
+{% block title %}
+Confirm Delivery Action
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">{{ shipment.trackingId }}</h3>
+                    <p class="card-text">Current status: <strong>{{ shipment.delivery_status }}</strong></p>
+                    {% if next_action %}
+                    <p class="card-text">Next action: <strong>{{ next_action.label }}</strong></p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="location" name="location" value="{{ shipment.current_location }}" placeholder="Enter current location">
+                        </div>
+                        <button type="submit" class="btn btn-success">Confirm {{ next_action.label }}</button>
+                        <a href="{% url 'delivery_staff_actions' %}" class="btn btn-secondary ms-2">Back</a>
+                    </form>
+                    {% else %}
+                    <div class="alert alert-secondary">No next workflow action is available for this shipment.</div>
+                    <a href="{% url 'delivery_staff_actions' %}" class="btn btn-secondary">Back</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -217,5 +217,69 @@ def profile(request):
     return render(request, "profile.html", data)
 
 
+def delivery_staff_actions(request):
+    if not request.session.get("email"):
+        messages.error(request, "Please log in to access delivery actions.")
+        return redirect("login")
+
+    user_email = request.session.get("email")
+    user_obj = sign.objects.filter(email=user_email).first()
+    if not user_obj:
+        messages.error(request, "Your session is invalid. Please log in again.")
+        return redirect("login")
+
+    assignments = DeliveryAssignment.objects.filter(delivery_staff=user_obj).order_by("-assigned_at")
+    shipment_ids = assignments.values_list("shipment_id", flat=True).distinct()
+    shipments = Shipment.objects.filter(id__in=shipment_ids).order_by("-created_at")
+    shipment_actions = []
+    for shipment in shipments:
+        shipment_actions.append({
+            "shipment": shipment,
+            "next_action": shipment.get_next_workflow_action(),
+        })
+
+    return render(request, "delivery_staff_actions.html", {
+        "shipment_actions": shipment_actions,
+        "assignments": assignments,
+    })
+
+
+def delivery_staff_action(request, shipment_id):
+    if not request.session.get("email"):
+        messages.error(request, "Please log in to access delivery actions.")
+        return redirect("login")
+
+    user_email = request.session.get("email")
+    user_obj = sign.objects.filter(email=user_email).first()
+    if not user_obj:
+        messages.error(request, "Your session is invalid. Please log in again.")
+        return redirect("login")
+
+    shipment = get_object_or_404(Shipment, pk=shipment_id, assignments__delivery_staff=user_obj)
+    next_action = shipment.get_next_workflow_action()
+    if not next_action:
+        messages.error(request, "This shipment has no next workflow action.")
+        return redirect("delivery_staff_actions")
+
+    if request.method == "POST":
+        try:
+            location = request.POST.get("location", shipment.current_location)
+            shipment.perform_workflow_action(
+                next_action["next_status"],
+                updated_by=user_obj,
+                location=location,
+                remarks=next_action["label"],
+            )
+            messages.success(request, f"Shipment updated to {next_action['next_status']}.")
+        except ValueError as exc:
+            messages.error(request, str(exc))
+        return redirect("delivery_staff_actions")
+
+    return render(request, "delivery_staff_action.html", {
+        "shipment": shipment,
+        "next_action": next_action,
+    })
+
+
 def helpCenter(request):
     return render(request, "help.html")

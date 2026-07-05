@@ -17,6 +17,7 @@ class DeliveryAssignmentInline(admin.TabularInline):
 
 class ShipmentAdmin(admin.ModelAdmin):
     list_display = ("id", "trackingId", "sender_name", "recipientName", "delivery_status", "assigned_delivery_staff")
+    readonly_fields = ("delivery_status",)
     inlines = [DeliveryAssignmentInline]
 
     def assigned_delivery_staff(self, obj):
