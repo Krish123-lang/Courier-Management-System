@@ -40,7 +40,7 @@ def dash(request):
     in_transit = Shipment.objects.filter(customerid=user_obj, delivery_status__in=["AT_HUB", "OUT_FOR_DELIVERY", "DEPARTED"]).count()
     delivered = Shipment.objects.filter(customerid=user_obj, delivery_status="DELIVERED").count()
     cancelled = Shipment.objects.filter(customerid=user_obj, delivery_status="CANCELLED").count()
-    recent_shipments = Shipment.objects.filter(customerid=user_obj).order_by("-created_at")[:5]
+    recent_shipments = Shipment.objects.filter(customerid=user_obj).order_by("-created_at")[:5]  
     context = {
         "total_shipments": total_shipments,
         "in_transit": in_transit,

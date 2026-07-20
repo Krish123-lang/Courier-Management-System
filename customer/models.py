@@ -10,6 +10,18 @@ def generate_trackingId():
     ch = string.ascii_uppercase + string.digits
     return "".join(random.choice(ch) for _ in range(10))
 
+class ShipmentStatusHistory(models.Model):
+    shipment = models.ForeignKey('Shipment', related_name='status_history', on_delete=models.CASCADE)
+    status = models.CharField(max_length=50)
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['timestamp', 'id']
+
+    def __str__(self):
+        return f"{self.shipment.trackingId or self.shipment.id} - {self.status}"
+
+
 class Shipment(models.Model):
     # status_choices = (
     #     ('Pending', 'Pending'),
@@ -49,8 +61,81 @@ class Shipment(models.Model):
     def __str__(self):
         return str(self.trackingId or self.id)
 
+    def get_tracking_history(self):
+        current_status = str(self.delivery_status or "PENDING").upper()
+
+        if current_status == "CANCELLED":
+            return [{
+                "title": "Order has been cancelled",
+                "description": self.recipientAddress or "The shipment has been cancelled.",
+                "icon_class": "fas fa-box-open text-muted",
+                "badge_class": "bg-dark",
+                "status": "CANCELLED",
+                "timestamp": None,
+            }]
+
+        status_rank = {
+            "PENDING": 0,
+            "AT_HUB": 1,
+            "OUT_FOR_DELIVERY": 2,
+            "DEPARTED": 3,
+            "DELIVERED": 4,
+        }
+        current_rank = status_rank.get(current_status, 0)
+
+        steps = [
+            {
+                "title": "Order Placed",
+                "description": "Your shipment request has been received and is being processed.",
+                "icon_class": "fas fa-check text-success",
+                "badge_class": "bg-success",
+                "status": "PENDING",
+            },
+            {
+                "title": "Arrived at Destination Hub",
+                "description": self.current_location or "Destination hub update pending.",
+                "icon_class": "fas fa-truck-loading text-info",
+                "badge_class": "bg-info",
+                "status": "AT_HUB",
+            },
+            {
+                "title": "Out for Delivery",
+                "description": f"Local Distribution Center, {self.current_location or 'processing center'}",
+                "icon_class": "fas fa-check text-success",
+                "badge_class": "bg-success",
+                "status": "OUT_FOR_DELIVERY",
+            },
+            {
+                "title": "Departed from Origin Hub",
+                "description": self.current_location or "Origin hub update pending.",
+                "icon_class": "fas fa-plane text-secondary",
+                "badge_class": "bg-secondary",
+                "status": "DEPARTED",
+            },
+            {
+                "title": "Shipment Picked Up",
+                "description": self.recipientAddress or "Recipient details pending.",
+                "icon_class": "fas fa-box-open text-muted",
+                "badge_class": "bg-dark",
+                "status": "DELIVERED",
+            },
+        ]
+
+        history = []
+        for step in steps:
+            if status_rank.get(step["status"], 0) <= current_rank:
+                history_entry = self.status_history.filter(status=step["status"]).order_by('-timestamp').first()
+                history.append({
+                    **step,
+                    "timestamp": history_entry.timestamp if history_entry else (self.created_at if step["status"] == "PENDING" else None),
+                })
+
+        return history
+
     def save(self, *args, **kwargs):
-        if not self.pk:
+        is_new = self._state.adding
+
+        if is_new:
             if not self.delivered_at:
                 self.delivered_at = timezone.now()
             if not self.current_location and self.customerid and self.customerid.address:
@@ -65,12 +150,20 @@ class Shipment(models.Model):
         else:
             old_status = None
 
-        if self.delivery_status != old_status:
+        status_changed = self.delivery_status != old_status
+        if status_changed or is_new:
             self.status_updated_at = timezone.now()
             if str(self.delivery_status).lower() == 'delivered':
                 self.delivered_at = timezone.now()
 
         super().save(*args, **kwargs)
+
+        if status_changed or is_new:
+            ShipmentStatusHistory.objects.create(
+                shipment=self,
+                status=str(self.delivery_status or "PENDING").upper(),
+                timestamp=self.status_updated_at,
+            )
 
 
 

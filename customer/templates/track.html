@@ -37,10 +37,11 @@ Track Your Order
                         <p class="card-text fs-5">Tracking ID: <b> {{s.trackingId}} </b></p>
                         <p class="card-text">
                             Estimated Delivery: <b>
+                                {% comment %} This needs to be fixed {% endcomment %}
                                 {% if s.delivery_status == "DELIVERED" and s.delivered_at %}
                                     {{ s.delivered_at|date:"Y-m-d h:i A" }}
-                                {% elif s.status_updated_at %}
-                                    {{ s.status_updated_at|date:"Y-m-d h:i A" }}
+                                {% elif s.delivered_at %}
+                                    {{ s.delivered_at|date:"Y-m-d h:i A" }}
                                 {% else %}
                                     TBD
                                 {% endif %}
@@ -49,65 +50,18 @@ Track Your Order
 
                         <h6 class="mt-4 mb-3 border-bottom pb-2 text-secondary">Shipment History</h6>
                         <ul class="list-group list-group-flush">
-                            {% if s.delivery_status == "OUT_FOR_DELIVERY" or s.delivery_status == "AT_HUB" or s.delivery_status == "DEPARTED" or s.delivery_status == "DELIVERED" %}
+                            {% for step in s.get_tracking_history %}
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div>
-                                    <i class="fas fa-check text-success me-2"></i>
-                                    <span class="fw-bold">Out for Delivery</span>
-                                    <p class="mb-0 text-muted small">Local Distribution Center,
-                                        {{s.current_location}}
-                                    </p>
+                                    <i class="{{ step.icon_class }} me-2"></i>
+                                    <span class="fw-bold">{{ step.title }}</span>
+                                    <p class="mb-0 text-muted small">{{ step.description }}</p>
                                 </div>
-                                <span class="badge bg-success rounded-pill">{{ s.status_updated_at }}</span>
+                                <span class="badge {{ step.badge_class }} rounded-pill">{{ step.timestamp|default:s.created_at }}</span>
                             </li>
-                            {% endif %}
-
-                            {% if s.delivery_status == "AT_HUB" or s.delivery_status == "DEPARTED" or s.delivery_status == "DELIVERED" %}
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div>
-                                    <i class="fas fa-truck-loading text-info me-2"></i>
-                                    <span class="fw-bold">Arrived at Destination Hub</span>
-                                    <p class="mb-0 text-muted small">
-                                        {{s.current_location}}
-                                    </p>
-                                </div>
-                                <span class="badge bg-info rounded-pill">{{ s.status_updated_at }}</span>
-                            </li>
-                            {% endif %}
-
-                            {% if s.delivery_status == "DEPARTED" or s.delivery_status == "DELIVERED" %}
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div>
-                                    <i class="fas fa-plane text-secondary me-2"></i>
-                                    <span class="fw-bold">Departed from Origin Hub</span>
-                                    <p class="mb-0 text-muted small">{{s.current_location}}</p>
-                                </div>
-                                <span class="badge bg-secondary rounded-pill">{{ s.status_updated_at }}</span>
-                            </li>
-                            {% endif %}
-
-                            {% if s.delivery_status == "DELIVERED" %}
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div>
-                                    <i class="fas fa-box-open text-muted me-2"></i>
-                                    <span class="fw-bold">Shipment Picked Up</span>
-                                    <p class="mb-0 text-muted small"> {{s.recipientAddress}} </p>
-                                </div>
-                                <span class="badge bg-dark rounded-pill">{{ s.status_updated_at }}</span>
-                            </li>
-                            {% endif %}
-
-                            {% if s.delivery_status == "CANCELLED" %}
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div>
-                                    <i class="fas fa-box-open text-muted me-2"></i>
-                                    <span class="fw-bold">Order has been cancelled</span>
-                                    <p class="mb-0 text-muted small"> {{s.recipientAddress}} </p>
-                                </div>
-                                <span class="badge bg-dark rounded-pill">{{ s.status_updated_at }}</span>
-                            </li>
-                            {% endif %}
-
+                            {% empty %}
+                            <li class="list-group-item text-muted">Tracking history will appear here once the shipment status is updated.</li>
+                            {% endfor %}
                         </ul>
                     </div>
                     {% endfor %}

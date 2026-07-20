@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import check_password
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from main.models import sign
-from .models import ReviewUser, Shipment
+from .models import ReviewUser, Shipment, ShipmentStatusHistory
 
 
 class ShipmentAndReviewModelTests(TestCase):
@@ -103,3 +103,50 @@ class ShipmentAndReviewModelTests(TestCase):
 
         self.assertIsNotNone(shipment.delivered_at)
         self.assertEqual(shipment.current_location, "Primary location")
+
+    def test_tracking_history_reflects_the_latest_delivery_status(self):
+        user = sign.objects.create(
+            name="Tracking User",
+            email="tracking@example.com",
+            phone=3333333333,
+            address="Tracking address",
+            mpass="Password123",
+            cpass="Password123",
+            date=timezone.now(),
+        )
+
+        shipment = Shipment.objects.create(
+            customerid=user,
+            sender_name="Sender",
+            pickupAddress="Pickup address",
+            senderNumber="1234567890",
+            recipientName="Recipient",
+            recipientAddress="Recipient address",
+            recipientNumber="9876543210",
+            package_description="Box",
+            delivery_status="AT_HUB",
+            current_location="Destination Hub",
+        )
+
+        history = shipment.get_tracking_history()
+        titles = [step["title"] for step in history]
+
+        self.assertEqual(titles, ["Order Placed", "Arrived at Destination Hub"])
+
+        shipment.delivery_status = "DELIVERED"
+        shipment.recipientAddress = "Recipient address"
+        shipment.save(update_fields=["delivery_status", "recipientAddress"])
+
+        history = shipment.get_tracking_history()
+        titles = [step["title"] for step in history]
+
+        self.assertEqual(
+            titles,
+            [
+                "Order Placed",
+                "Arrived at Destination Hub",
+                "Out for Delivery",
+                "Departed from Origin Hub",
+                "Shipment Picked Up",
+            ],
+        )
