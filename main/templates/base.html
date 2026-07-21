@@ -30,14 +30,14 @@
                 <div class="row align-items-center gy-3">
                     <div class="col-lg-3 col-md-4 col-sm-6 text-center text-md-start">
                         <a href="{% url 'home' %}" class="navbar-brand d-flex align-items-center gap-2 text-decoration-none">
-                            <img src="{% static 'images/logo.jpg' %}" alt="BoxBird logo" class="rounded-circle">
-                            <span class="fw-bold fs-4 text-danger">BoxBird</span>
+                            <img src="{% static 'images/logo.jpg' %}" alt="Courier Hub logo" class="rounded-circle">
+                            <span class="fw-bold fs-4 text-danger">Courier Hub</span>
                         </a>
                     </div>
                     <div class="col-lg-6 col-md-8">
                         <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3 small text-muted">
-                            <span><i class="fa-solid fa-envelope text-danger me-1"></i> support@boxbird.com</span>
-                            <span><i class="fa-solid fa-phone text-danger me-1"></i> +91 9119015065</span>
+                            <span><i class="fa-solid fa-envelope text-danger me-1"></i> support@courierhub.com</span>
+                            <span><i class="fa-solid fa-phone text-danger me-1"></i> +977 9801234567</span>
                         </div>
                     </div>
                     <div class="col-lg-3 text-center text-lg-end">
@@ -48,13 +48,13 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="mainNav">
+                    <div class="collapse navbar-collapse justify-content-center" id="mainNav">
                         <ul class="navbar-nav gap-2">
                             <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'home' %}"><i class="fa-solid fa-house me-1"></i> Home</a></li>
                             <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'about' %}"><i class="fa-solid fa-circle-info me-1"></i> About</a></li>
                             <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'dom' %}"><i class="fa-solid fa-box me-1"></i> Domestic</a></li>
                             <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'vas' %}"><i class="fa-solid fa-gift me-1"></i> Value Added</a></li>
-                            <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'team' %}"><i class="fa-solid fa-users me-1"></i> Team</a></li>
+                            {% comment %} <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'team' %}"><i class="fa-solid fa-users me-1"></i> Team</a></li> {% endcomment %}
                             <li class="nav-item"><a class="nav-link px-3 text-dark" href="{% url 'contact' %}"><i class="fa-solid fa-headset me-1"></i> Contact</a></li>
                         </ul>
                     </div>
@@ -70,29 +70,29 @@
             <div class="container">
                 <div class="row g-4">
                     <div class="col-lg-4">
-                        <h5 class="text-danger fw-bold">BoxBird Logistics</h5>
-                        <p class="text-light-emphasis">Fast, reliable, and secure parcel delivery for homes and businesses across India.</p>
+                        <h5 class="text-danger fw-bold">Courier Hub Logistics</h5>
+                        <p class="text-white-emphasis">Fast, reliable, and secure parcel delivery for homes and businesses across Nepal.</p>
                     </div>
                     <div class="col-lg-4">
                         <h6 class="fw-bold mb-3">Quick Links</h6>
                         <ul class="list-unstyled">
-                            <li><a href="{% url 'home' %}" class="text-light-emphasis text-decoration-none">Home</a></li>
-                            <li><a href="{% url 'about' %}" class="text-light-emphasis text-decoration-none">About</a></li>
-                            <li><a href="{% url 'contact' %}" class="text-light-emphasis text-decoration-none">Contact</a></li>
+                             <li><a href="{% url 'home' %}" class="text-white text-decoration-none">Home</a></li>
+                            <li><a href="{% url 'about' %}" class="text-white text-decoration-none">About</a></li>
+                            <li><a href="{% url 'contact' %}" class="text-white text-decoration-none">Contact</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-4">
                         <h6 class="fw-bold mb-3">Contact</h6>
-                        <p class="text-light-emphasis mb-2"><i class="fa-solid fa-phone me-2"></i> +91 9119015065</p>
-                        <p class="text-light-emphasis mb-2"><i class="fa-solid fa-envelope me-2"></i> support@boxbird.com</p>
+                        <p class="text-white-emphasis mb-2"><i class="fa-solid fa-phone me-2"></i> +977 9801234567</p>
+                        <p class="text-white-emphasis mb-2"><i class="fa-solid fa-envelope me-2"></i> support@courierhub.com</p>
                         <div class="d-flex gap-2 mt-3">
-                            <a href="https://wa.me/9119015065" class="btn btn-outline-light btn-sm rounded-pill" target="_blank">WhatsApp</a>
+                            <a href="https://wa.me/9801234567" class="btn btn-outline-light btn-sm rounded-pill" target="_blank">WhatsApp</a>
                             <a href="https://www.instagram.com" class="btn btn-outline-light btn-sm rounded-pill" target="_blank">Instagram</a>
                         </div>
                     </div>
                 </div>
-                <div class="border-top border-secondary mt-4 pt-3 text-center text-light-emphasis small">
-                    © 2026 BoxBird Logistics. All rights reserved.
+                <div class="border-top border-secondary mt-4 pt-3 text-center text-white-emphasis small">
+                    © {% now "Y" %} Courier Hub Logistics. All rights reserved.
                 </div>
             </div>
         </footer>

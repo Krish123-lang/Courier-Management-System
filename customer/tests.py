@@ -150,3 +150,85 @@ class ShipmentAndReviewModelTests(TestCase):
                 "Shipment Picked Up",
             ],
         )
+
+    def test_dashboard_summary_counts_match_visible_recent_shipments(self):
+        user = sign.objects.create(
+            name="Dashboard User",
+            email="dashboard@example.com",
+            phone=4444444444,
+            address="Dashboard address",
+            mpass="Password123",
+            cpass="Password123",
+            date=timezone.now(),
+        )
+
+        Shipment.objects.create(
+            customerid=user,
+            sender_name="Sender",
+            pickupAddress="Pickup address",
+            senderNumber="1234567890",
+            recipientName="Recipient",
+            recipientAddress="Recipient address",
+            recipientNumber="9876543210",
+            package_description="Box",
+            delivery_status="At hub",
+        )
+        Shipment.objects.create(
+            customerid=user,
+            sender_name="Sender",
+            pickupAddress="Pickup address",
+            senderNumber="1234567890",
+            recipientName="Recipient",
+            recipientAddress="Recipient address",
+            recipientNumber="9876543210",
+            package_description="Box",
+            delivery_status="Delivered",
+        )
+        Shipment.objects.create(
+            customerid=user,
+            sender_name="Sender",
+            pickupAddress="Pickup address",
+            senderNumber="1234567890",
+            recipientName="Recipient",
+            recipientAddress="Recipient address",
+            recipientNumber="9876543210",
+            package_description="Box",
+            delivery_status="Cancelled",
+        )
+        Shipment.objects.create(
+            customerid=user,
+            sender_name="Sender",
+            pickupAddress="Pickup address",
+            senderNumber="1234567890",
+            recipientName="Recipient",
+            recipientAddress="Recipient address",
+            recipientNumber="9876543210",
+            package_description="Box",
+            delivery_status="DEPARTED",
+        )
+        Shipment.objects.create(
+            customerid=user,
+            sender_name="Sender",
+            pickupAddress="Pickup address",
+            senderNumber="1234567890",
+            recipientName="Recipient",
+            recipientAddress="Recipient address",
+            recipientNumber="9876543210",
+            package_description="Box",
+            delivery_status="Delivered",
+        )
+
+        session = self.client.session
+        session["email"] = user.email
+        session["name"] = user.name
+        session["number"] = str(user.phone)
+        session["address"] = user.address
+        session.save()
+
+        response = self.client.get(reverse("dashboard"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["total_shipments"], 5)
+        self.assertEqual(response.context["in_transit"], 2)
+        self.assertEqual(response.context["delivered"], 2)
+        self.assertEqual(response.context["cancelled"], 1)

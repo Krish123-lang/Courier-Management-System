@@ -10,5 +10,5 @@ urlpatterns = [
     path('dom/', views.dom, name="dom"),
     path('vas/', views.vas, name="vas"),
     path('about/', views.about, name="about"),
-    path('team/', views.team, name="team"),
+    # path('team/', views.team, name="team"),
 ]

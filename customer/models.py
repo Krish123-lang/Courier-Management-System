@@ -61,6 +61,20 @@ class Shipment(models.Model):
     def __str__(self):
         return str(self.trackingId or self.id)
 
+    @staticmethod
+    def normalize_delivery_status(value):
+        if value is None:
+            return "PENDING"
+        normalized = str(value).strip().upper().replace(" ", "_")
+        return {
+            "PENDING": "PENDING",
+            "AT_HUB": "AT_HUB",
+            "OUT_FOR_DELIVERY": "OUT_FOR_DELIVERY",
+            "DEPARTED": "DEPARTED",
+            "DELIVERED": "DELIVERED",
+            "CANCELLED": "CANCELLED",
+        }.get(normalized, normalized)
+
     def get_tracking_history(self):
         current_status = str(self.delivery_status or "PENDING").upper()
 
@@ -133,6 +147,8 @@ class Shipment(models.Model):
         return history
 
     def save(self, *args, **kwargs):
+        self.delivery_status = self.normalize_delivery_status(self.delivery_status)
+
         is_new = self._state.adding
 
         if is_new:

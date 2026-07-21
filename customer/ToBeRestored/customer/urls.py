@@ -1,6 +1,0 @@
-# path("book/", views.book, name='book'),
-# path("hist/", views.hist, name='hist'),
-# path("bill/", views.bill, name='bill'),
-# path("help/", views.helpCenter, name='help'),
-# path("profile/", views.profile, name='profile'),
-# path("review/", views.review, name='review'),

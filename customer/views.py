@@ -36,13 +36,23 @@ def dash(request):
         messages.error(request, "Your session is invalid. Please log in again.")
         return redirect("login")
 
-    total_shipments = Shipment.objects.filter(customerid=user_obj).count()
-    in_transit = Shipment.objects.filter(customerid=user_obj, delivery_status__in=["AT_HUB", "OUT_FOR_DELIVERY", "DEPARTED"]).count()
-    delivered = Shipment.objects.filter(customerid=user_obj, delivery_status="DELIVERED").count()
-    cancelled = Shipment.objects.filter(customerid=user_obj, delivery_status="CANCELLED").count()
-    recent_shipments = Shipment.objects.filter(customerid=user_obj).order_by("-created_at")[:5]  
+    dashboard_shipments = Shipment.objects.filter(customerid=user_obj).order_by("-created_at")
+    recent_shipments = list(dashboard_shipments[:5])
+
+    in_transit = 0
+    delivered = 0
+    cancelled = 0
+    for shipment in dashboard_shipments:
+        status = Shipment.normalize_delivery_status(getattr(shipment, "delivery_status", None))
+        if status in {"AT_HUB", "OUT_FOR_DELIVERY", "DEPARTED"}:
+            in_transit += 1
+        elif status == "DELIVERED":
+            delivered += 1
+        elif status == "CANCELLED":
+            cancelled += 1
+
     context = {
-        "total_shipments": total_shipments,
+        "total_shipments": dashboard_shipments.count(),
         "in_transit": in_transit,
         "delivered": delivered,
         "cancelled": cancelled,

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}BoxBird Logistics{% endblock %}
+{% block title %}Courier Hub Logistics{% endblock %}
 
 {% block content %}
 <div class="container py-4 py-lg-5">
@@ -10,14 +10,14 @@
             <div class="col-lg-6 p-4 p-lg-5">
                 <span class="badge bg-danger-subtle text-danger mb-3">Trusted by 50k+ customers</span>
                 <h1 class="display-5 fw-bold mb-3 text-gradient">Ship faster, track smarter, deliver better.</h1>
-                <p class="lead text-muted mb-4">From same-day city courier to nationwide parcel delivery, BoxBird makes every shipment transparent and stress-free.</p>
+                <p class="lead text-muted mb-4">From same-day city courier to nationwide parcel delivery, Courier Hub makes every shipment transparent and stress-free.</p>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="{% url 'signup' %}" class="btn btn-danger-soft px-4 py-2 rounded-pill">Create account</a>
                     <a href="{% url 'dom' %}" class="btn btn-outline-danger px-4 py-2 rounded-pill">Explore services</a>
                 </div>
             </div>
             <div class="col-lg-6">
-                <img src="{% static 'images/slider1.jpg' %}" alt="Courier delivery" class="img-fluid w-100" style="height: 420px; object-fit: cover;">
+                <img src="{% static 'images/slider1.jpg' %}" alt="Courier delivery" class="img-fluid w-100" style="object-fit: cover;"> 
             </div>
         </div>
     </section>
@@ -25,7 +25,7 @@
     <section class="row g-4 mb-5">
         <div class="col-lg-6">
             <div class="glass-card p-4 rounded-4 h-100">
-                <h3 class="fw-bold mb-3"><i class="fa-solid fa-truck-fast text-danger me-2"></i> Why BoxBird?</h3>
+                <h3 class="fw-bold mb-3"><i class="fa-solid fa-truck-fast text-danger me-2"></i> Why Courier Hub?</h3>
                 <p class="text-muted">We combine live tracking, secure pickups, and dependable delivery windows to give your parcels a smoother journey.</p>
                 <ul class="list-unstyled mt-3">
                     <li class="mb-2"><i class="fa-solid fa-check-circle text-success me-2"></i> Real-time shipment updates</li>
@@ -47,7 +47,7 @@
         <div class="col-lg-4">
             <div class="glass-card p-4 rounded-4 h-100">
                 <h5 class="fw-bold mb-3">Domestic Delivery</h5>
-                <p class="text-muted">Affordable and dependable delivery for parcels traveling within India.</p>
+                <p class="text-muted">Affordable and dependable delivery for parcels traveling within Nepal.</p>
                 <a href="{% url 'dom' %}" class="btn btn-outline-danger rounded-pill">View details</a>
             </div>
         </div>
