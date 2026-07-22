@@ -47,7 +47,7 @@ Billings For Your All Orders
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover align-middle">
+                            <table id="invoiceHistoryTable" class="table table-striped table-hover align-middle">
                                 <thead>
                                     <tr>
                                         <th scope="col">Invoice ID</th>
@@ -132,5 +132,32 @@ Billings For Your All Orders
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!$('#invoiceHistoryTable').length) {
+            return;
+        }
+
+        if ($.fn.DataTable.isDataTable('#invoiceHistoryTable')) {
+            return;
+        }
+
+        $('#invoiceHistoryTable').DataTable({
+            responsive: true,
+            pageLength: 10,
+            order: [[1, 'desc']],
+            language: {
+                search: 'Search invoices:',
+                lengthMenu: 'Show _MENU_ entries',
+                info: 'Showing _START_ to _END_ of _TOTAL_ invoices',
+                paginate: {
+                    previous: 'Prev',
+                    next: 'Next'
+                }
+            }
+        });
+    });
+</script>
 
 {% endblock %}

@@ -74,7 +74,7 @@ User DashBoard
                     <p class="text-muted mb-0">Your latest orders and their current progress.</p>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
+                    <table id="shipmentsTable" class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
                                 <th scope="col">Tracking ID</th>
@@ -113,4 +113,27 @@ User DashBoard
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if ($.fn.DataTable.isDataTable('#shipmentsTable')) {
+            return;
+        }
+
+        $('#shipmentsTable').DataTable({
+            responsive: true,
+            pageLength: 10,
+            order: [[5, 'desc']],
+            language: {
+                search: 'Search shipments:',
+                lengthMenu: 'Show _MENU_ entries',
+                info: 'Showing _START_ to _END_ of _TOTAL_ shipments',
+                paginate: {
+                    previous: 'Prev',
+                    next: 'Next'
+                }
+            }
+        });
+    });
+</script>
 {% endblock %}

@@ -46,7 +46,7 @@ Your History will Appear Here
         <div class="tab-content" id="shipmentTabsContent">
             <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped table-bordered align-middle">
+                    <table id="activeShipmentsTable" class="table table-hover table-striped table-bordered align-middle">
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">Tracking ID</th>
@@ -87,7 +87,7 @@ Your History will Appear Here
 
             <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped table-bordered align-middle">
+                    <table id="shipmentHistoryTable" class="table table-hover table-striped table-bordered align-middle">
                         <thead class="table-secondary">
                             <tr>
                                 <th scope="col">Tracking ID</th>
@@ -130,5 +130,36 @@ Your History will Appear Here
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tables = ['#activeShipmentsTable', '#shipmentHistoryTable'];
+
+        tables.forEach(function (selector) {
+            if (!$(selector).length) {
+                return;
+            }
+
+            if ($.fn.DataTable.isDataTable(selector)) {
+                return;
+            }
+
+            $(selector).DataTable({
+                responsive: true,
+                pageLength: 10,
+                order: [[0, 'asc']],
+                language: {
+                    search: 'Search records:',
+                    lengthMenu: 'Show _MENU_ entries',
+                    info: 'Showing _START_ to _END_ of _TOTAL_ records',
+                    paginate: {
+                        previous: 'Prev',
+                        next: 'Next'
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 {% endblock %}
