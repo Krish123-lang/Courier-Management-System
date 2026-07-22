@@ -1,13 +1,74 @@
+from unittest.mock import patch
 from django.utils import timezone
 from django.test import TestCase
 from django.contrib.auth.hashers import check_password
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from main.models import sign
-from .models import ReviewUser, Shipment, ShipmentStatusHistory
+from .models import ReviewUser, Shipment, ShipmentStatusHistory, Invoice
 
 
 class ShipmentAndReviewModelTests(TestCase):
+    def test_paypal_create_order_redirects_to_approval_url(self):
+        user = sign.objects.create(
+            name="Paypal User",
+            email="paypal@example.com",
+            phone=5555555555,
+            address="Paypal address",
+            mpass="Password123",
+            cpass="Password123",
+            date=timezone.now(),
+        )
+        invoice = Invoice.objects.create(
+            user=user,
+            invoice_id="INV-PP-001",
+            amount="25.50",
+            status="PENDING",
+        )
+        session = self.client.session
+        session["email"] = user.email
+        session["name"] = user.name
+        session["number"] = str(user.phone)
+        session["address"] = user.address
+        session.save()
+
+        with patch("customer.views._paypal_create_order_request", return_value=(
+            {"id": "ORDER-123", "links": [{"rel": "approve", "href": "https://www.sandbox.paypal.com/checkoutnow?token=ORDER-123"}]},
+            "https://www.sandbox.paypal.com/checkoutnow?token=ORDER-123",
+        )):
+            response = self.client.post(reverse("paypal_create_order", args=[invoice.id]))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "https://www.sandbox.paypal.com/checkoutnow?token=ORDER-123")
+
+    def test_paypal_return_marks_invoice_paid(self):
+        user = sign.objects.create(
+            name="Paypal Return User",
+            email="paypalreturn@example.com",
+            phone=6666666666,
+            address="Paypal return address",
+            mpass="Password123",
+            cpass="Password123",
+            date=timezone.now(),
+        )
+        invoice = Invoice.objects.create(
+            user=user,
+            invoice_id="INV-PP-002",
+            amount="30.00",
+            status="PENDING",
+        )
+
+        with patch("customer.views._paypal_capture_order_request", return_value=True):
+            response = self.client.get(
+                reverse("paypal_return"),
+                {"invoice_id": invoice.id, "token": "TOKEN-123", "PayerID": "PAYER-123"},
+            )
+
+        invoice.refresh_from_db()
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(invoice.status, "PAID")
+        self.assertTrue(invoice.pdf)
+
     def test_passwords_are_hashed_on_create(self):
         user = sign.objects.create(
             name="Secure User",

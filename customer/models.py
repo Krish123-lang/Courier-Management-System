@@ -61,6 +61,10 @@ class Shipment(models.Model):
     def __str__(self):
         return str(self.trackingId or self.id)
 
+    def get_payment_status(self):
+        invoice = Invoice.objects.filter(booking=self).order_by('-created_at').first()
+        return invoice.status if invoice else "PENDING"
+
     @staticmethod
     def normalize_delivery_status(value):
         if value is None:
@@ -199,6 +203,9 @@ class Invoice(models.Model):
 
     def __str__(self):
         return self.invoice_id
+
+    def get_payment_status(self):
+        return self.status
     
 
 class PaymentMethod(models.Model):

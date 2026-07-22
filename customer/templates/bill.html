@@ -16,13 +16,24 @@ Billings For Your All Orders
 {% endif %}
 
 
+{% if messages %}
+<div class="container my-3">
+    {% for message in messages %}
+    <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% elif message.tags == 'info' %}info{% else %}warning{% endif %} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
 <div class="row my-4">
     <div class="fw-bold display-5 text-warning text-center mb-4">
         <i class="fas fa-money-check-alt me-3"></i>
         Billing & Payments
     </div>
     <p class="text-center lead">
-        Manage your payment methods and review your transaction history.
+        Review your recent payments and invoice history.
     </p>
 </div>
 
@@ -53,18 +64,28 @@ Billings For Your All Orders
                                         <td>{{ inv.created_at|date:"Y-m-d" }}</td>
                                         <td>₹{{ inv.amount }}</td>
                                         <td>
-                                            {% if inv.delivery_status == "PAID" %}
+                                            {% if inv.status == "PAID" %}
                                             <span class="badge bg-success">Paid</span>
-                                            {% elif inv.delivery_status == "PENDING" %}
+                                            {% elif inv.status == "PENDING" %}
                                             <span class="badge bg-warning text-dark">Pending</span>
                                             {% else %}
                                             <span class="badge bg-danger">Cancelled</span>
                                             {% endif %}
                                         </td>
                                         <td>
-                                            <a href="/{{ inv.pdf }}" class="btn btn-sm btn-outline-primary">
+                                            {% if inv.status != "PAID" and paypal_ready %}
+                                            <form method="post" action="{% url 'paypal_create_order' inv.id %}" class="d-inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fab fa-paypal"></i> PayPal
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                            {% if inv.pdf %}
+                                            <a href="{{ inv.pdf.url }}" class="btn btn-sm btn-outline-secondary ms-1">
                                                 <i class="fas fa-download"></i> PDF
                                             </a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                     {% empty %}
@@ -82,28 +103,26 @@ Billings For Your All Orders
             <div class="col-lg-5 mb-4">
                 <div class="card shadow">
                     <div class="card-header bg-secondary text-white">
-                        <h5 class="mb-0"><i class="fas fa-credit-card me-2"></i> Payment Methods</h5>
+                        <h5 class="mb-0"><i class="fas fa-history me-2"></i> Recent Payments</h5>
                     </div>
                     <div class="card-body">
                         <div class="list-group mb-3">
-                            {% for pm in payment_methods %}
-                            <div class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    {% if pm.method_type == "UPI" %}
-                                    <i class="fas fa-mobile-alt fa-lg me-2 text-success"></i>
-                                    UPI: {{ pm.upi_id }}
-                                    {% else %}
-                                    <i class="fas fa-money-bill-wave fa-lg me-2 text-secondary"></i>
-                                    Cash on Delivery
-                                    {% endif %}
+                            {% for inv in invoices %}
+                                {% if inv.status == "PAID" %}
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="fw-semibold">{{ inv.invoice_id }}</div>
+                                        <div class="small text-muted">{{ inv.created_at|date:"Y-m-d" }}</div>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-semibold">₹{{ inv.amount }}</div>
+                                        <span class="badge bg-success">Paid</span>
+                                    </div>
                                 </div>
-                                {% if pm.is_default %}
-                                <span class="badge bg-success">Default</span>
                                 {% endif %}
-                            </div>
                             {% empty %}
                             <div class="list-group-item text-center">
-                                No payment methods saved.
+                                No recent payments yet.
                             </div>
                             {% endfor %}
                         </div>

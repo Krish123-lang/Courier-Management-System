@@ -81,6 +81,7 @@ User DashBoard
                                 <th scope="col">Recipient</th>
                                 <th scope="col">Destination</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">Payment</th>
                                 <th scope="col">Last Update</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -92,11 +93,18 @@ User DashBoard
                                 <td>{{ s.recipientName }}</td>
                                 <td>{{ s.recipientAddress }}</td>
                                 <td><span class="badge {% if s.delivery_status == 'AT_HUB' %} bg-warning text-dark {% elif s.delivery_status == 'DEPARTED' %} bg-primary {% elif s.delivery_status == 'DELIVERED' %} bg-success {% else %} bg-secondary {% endif %} p-2">{{ s.delivery_status }}</span></td>
+                                <td>
+                                    {% if s.get_payment_status == 'PAID' %}
+                                    <span class="badge bg-success">Paid</span>
+                                    {% else %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                    {% endif %}
+                                </td>
                                 <td>{{ s.created_at|date:"Y-m-d h:i A" }}</td>
                                 <td><a href="{% url 'track' %}?id={{s.trackingId}}" class="btn btn-sm btn-outline-danger"><i class="fas fa-eye"></i> Track</a></td>
                             </tr>
                             {% empty %}
-                            <tr><td colspan="6" class="text-center text-muted py-4">No active shipment found.</td></tr>
+                            <tr><td colspan="7" class="text-center text-muted py-4">No active shipment found.</td></tr>
                             {% endfor %}
                         </tbody>
                     </table>

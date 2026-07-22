@@ -100,15 +100,16 @@ Book Your Courier with Courier Hub
                             <label for="serviceType" class="form-label">Service Type</label>
                             <select class="form-select" name="serviceType" id="serviceType" required>
                                 <option selected disabled>Choose...</option>
-                                <option>Standard (9-10 days)</option>
-                                <option>Express (7-8 days)</option>
-                                <option>Same Day (for same city or town)</option>
+                                <option value="standard">Standard (9-10 days)</option>
+                                <option value="express">Express (7-8 days)</option>
+                                <option value="same_day">Same Day (for same city or town)</option>
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <label for="value" class="form-label">Declared Value (Rs.)</label>
+                            <label for="value" class="form-label">Service Amount (Rs.)</label>
                             <input type="number" name="money" class="form-control" id="value" min="100" step="1"
-                                placeholder="For Insurance" required>
+                                placeholder="Calculated service charge" required readonly>
+                            <div class="form-text" id="chargeHint">Select a service and enter the package weight to calculate the charge.</div>
                         </div>
                     </div>
 
@@ -122,5 +123,37 @@ Book Your Courier with Courier Hub
         </div>
     </div>
 </div>
+
+<script>
+    const serviceTypeSelect = document.getElementById('serviceType');
+    const weightInput = document.getElementById('weight');
+    const amountInput = document.getElementById('value');
+    const chargeHint = document.getElementById('chargeHint');
+
+    function calculateServiceCharge() {
+        const service = serviceTypeSelect.value;
+        const weight = parseFloat(weightInput.value);
+
+        let charge = 0;
+        if (service === 'standard') {
+            charge = 100 + (weight > 0 ? weight * 40 : 0);
+        } else if (service === 'express') {
+            charge = 150 + (weight > 0 ? weight * 60 : 0);
+        } else if (service === 'same_day') {
+            charge = 220 + (weight > 0 ? weight * 90 : 0);
+        }
+
+        if (charge > 0) {
+            amountInput.value = Math.round(charge);
+            chargeHint.textContent = `Estimated charge for ${service === 'standard' ? 'Standard' : service === 'express' ? 'Express' : 'Same Day'} service.`;
+        } else {
+            amountInput.value = '';
+            chargeHint.textContent = 'Select a service and enter the package weight to calculate the charge.';
+        }
+    }
+
+    serviceTypeSelect.addEventListener('change', calculateServiceCharge);
+    weightInput.addEventListener('input', calculateServiceCharge);
+</script>
 
 {% endblock %}
